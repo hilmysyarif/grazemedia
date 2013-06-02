@@ -1,16 +1,3 @@
-<IfModule mod_rewrite.c>
-    RewriteEngine On
-
-    # Forces www
-    RewriteCond %{HTTP_HOST} !^$
-	RewriteCond %{HTTP_HOST} !^www\. [NC]
-	RewriteCond %{HTTPS}s ^on(s)|
-	RewriteRule ^ http%1://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
-
-    # Removes index.php from ExpressionEngine URLs
-    RewriteCond $1 !\.(gif|jpe?g|png)$ [NC]
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^(.*)$ /index.php/$1 [L]
-
-</IfModule>
+RewriteEngine On
+Options +FollowSymLinks
+RewriteRule ^test\.html http://www.expressionengine.com/? [R=301,L]
