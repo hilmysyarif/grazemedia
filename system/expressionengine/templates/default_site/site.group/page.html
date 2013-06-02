@@ -1,0 +1,16 @@
+{exp:channel:entries disable="categories|category_fields|member_data|pagination" cache="yes" refresh="30" require_entry="yes"}
+	{if no_results}
+		{redirect="404"}
+	{/if}
+	{embed="site/header" title="{title}" meta="{meta}"}
+	<div id="main">
+		<div class="container" id="content">
+			<div class="span12">
+				<h1>{title}</h1>
+				{content}
+			</div>
+			{/exp:channel:entries}
+			{!--{embed="includes/ads"}--}
+		</div>
+	</div>
+	{embed="site/footer"}

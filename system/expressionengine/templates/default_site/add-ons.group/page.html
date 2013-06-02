@@ -1,0 +1,41 @@
+{exp:channel:entries disable="categories|category_fields|member_data|pagination" cache="yes" refresh="30" require_entry="yes"}
+	{if no_results}
+		{redirect="404"}
+	{/if}
+	{embed="site/header" title="{title}" meta="{slug}"}
+	<div id="main">
+		<div class="container" id="content">
+			<div class="twelve columns">
+				<h1>{title}</h1>
+				<nav id="docsnav" style="float:left;">
+					<ul>
+						<li><a href="#description" class="active">description</a></li>
+						<li><a href="#documentation">documentation</a></li>
+						<li><a href="#changelog">changelog</a></li>
+						<li><a href="#support">support</a></li>
+					</ul>
+				</nav>
+				<div class="clear"></div>
+				<div id="add-on">
+					<div id="description">
+						<h2>description</h2>
+						{description}
+					</div>
+					<div id="documentation">
+						<h2>documentation</h2>
+						{docs}
+					</div>
+					<div id="changelog">
+						<h2>changelog</h2>
+						{changelog}
+					</div>
+					<div id="support">
+						<h2>support</h2>
+						{support}
+					</div>
+				</div>
+			</div>
+			{/exp:channel:entries}
+			{!--{embed="includes/ads"}--}
+		</div>
+	</div>

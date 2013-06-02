@@ -1,0 +1,57 @@
+{if segment_1 == '' OR segment_1 == 'index'}
+{embed="site/header" title="ExpressionEngine web and add-on development" meta="ExpressionEngine web and add-on development"}
+<div id="main">
+	<div id="title_wrapper">
+		<div class="container">
+			<div class="span16">
+				<ul class="ads">
+					<li class="add-ons">
+						<a href="#add-ons">
+							<span>add-ons</span>
+						</a>
+					</li>
+					<li class="development">
+						<a href="#development">
+							<span>web development</span>
+						</a>
+					</li>
+					<li class="support">
+						<a href="{path='contact'}">
+							<span>speak to us</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div id="add-ons"><!-- Add Ons -->
+		<div class="container">
+			<h1 class="span16">add-ons</h1>
+			<div class="span10 image">
+				<img src="images/invoicee-big.png" alt="Add-ons" />
+			</div>
+			<div class="span6">
+				<p>Graze Media specialise in third-party add-ons for ExpressionEngine.</p>
+				<p>These add-ons aim to help enhance your application by extending the functionality of the core package. </p>
+				<p>All of our add-ons are fully documented and the code is commented throughout. However, if you require support we're also <a href="{path='contact'}">here to help</a> and pride ourselves on quick and efficient support.</p>
+				<p>Take a look at our <a href="{path='add-ons'}">add-ons</a> section to see if we've got something to help you.</p>
+			</div>
+		</div>
+	</div><!-- End of Add Ons -->
+	<div id="development"><!-- Development -->
+		<div class="container">
+			<h1 class="span16">web development</h1>
+			<div class="span6">
+				<p>Not only do Graze Media develop high quality CMS add-ons, but we also develop bespoke websites and applications to suit your requirements. We treat every project as if it is our own to ensure that the solution we provide is going to be right for you.</p>
+				<p>So, if you feel that Graze Media could be the right choice for your project, please feel free to <a href="{path='contact'}">contact us</a> with details of what you require.</p>
+			</div>
+			<div class="span10 image">
+				<img src="images/web-development.jpg" alt="Web development" />
+			</div>
+		</div>
+	</div><!-- End of Development -->
+</div>
+{embed="site/footer"}
+{if:else}
+	{embed="site/page"}
+{/if}

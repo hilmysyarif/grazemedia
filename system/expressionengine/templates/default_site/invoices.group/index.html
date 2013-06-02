@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<head>
+	<title></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<link rel="stylesheet" href="{theme_folder_url}common/css/pdf.css">
+</head>
+<body>
+<div id="wrapper">
+<div class="container">
+<h1>
+	smoky<span class="com">joe</span>
+</h1>
+{exp:invoicee:invoice record_id="{record_id}" type="pdf"}
+	{if paid}<table cellpadding="5" cellspacing="0" style="background:#ffffff url('http://image.shutterstock.com/display_pic_with_logo/587431/101241805/stock-vector-grunge-paid-stamp-vector-illustration-101241805.jpg') no-repeat center center;">
+	{if:else}<table cellpadding="5" cellspacing="0">{/if}
+	   <tr>
+	    <td valign="top" align="left" ><br>
+		{if client_name}
+	     	{client_name}<br />
+		{/if}
+		{if client_address_1}
+			{client_address_1}<br />
+		{/if}
+		{if client_address_2}
+			{client_address_2}<br />
+		{/if}
+		{if client_town}
+			{client_town}<br />
+		{/if}
+		{if client_county}
+			{client_county}<br />
+		{/if}
+		{if client_postcode}
+			{client_postcode}<br />
+		{/if}
+		  <br/>
+		  <br/>
+	     <table cellspacing="0" cellpadding="0" width="100%">
+	      <tr>
+	       <td><h2><strong>Quote</strong></h2></td>
+	      </tr>
+	     </table>
+	     <table cellspacing="0" cellpadding="0" width="100%">
+	      <tr>
+	       <td valign="top">
+	        <span><strong>Invoice Date: </strong></span> 
+	        <span>{invoice_date format="%d %F %Y"}</span>
+	       </td>
+	      </tr>
+	     </table>
+	     <table cellspacing="0" cellpadding="0" width="100%">
+	      <tr>
+	       <td valign="top">
+	        <span><b>Invoice Number: </b></span> 
+	        <span>{invoice_number}</span>
+	       </td>
+	      </tr>
+	     </table>
+		 <h2><strong>Entries</strong></h2>
+		 <table cellpadding="5px">
+			<tr align="left"><th width="25%">Task</th><th width="25%">Description</th><th width="12.5%" class="center">Units</th><th width="12.5%" class="right">Rate</th><th width="12.5%" class="right">Total</th></tr>
+			{entries}			<tr><td>{title}</td><td>{description}</td><td class="center">{units}</td><td class="right">{rate}</td><td class="right">{total}</td></tr>
+			{/entries}
+		 </table>
+		 <table cellpadding="5px" style="padding-top:20px">
+			<tr><td width="70%"></td><td>Subtotal</td><td class="right">{subtotal}</td></tr>
+			<tr><td width="70%"></td><th align="left">Total</th><th class="right">{total}</th></tr>
+		 </table>
+	  </table>
+{/exp:invoicee:invoice}
+</div>
+</div>
+</body>

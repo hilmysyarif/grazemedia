@@ -1,0 +1,110 @@
+{if segment_2 == ""}
+{embed="site/header" title="add-ons" meta="Add-ons by Graze Media"}
+<div id="main">
+	<div id="add-ons_page">
+		<div class="container">
+			<h1 class="span16">add-ons</h1>
+			<ul>
+			{exp:channel:entries channel="add-ons"}
+			<li>
+				<div class="span3">
+					<img src="{image}" alt="{title}" />
+				</div>
+				<div class="span13">
+					<h2><a href="{path='{segment_1}/{url_title}'}">{title}</a></h2>
+					<p>{slug}</p>
+				</div>
+			</li>
+			{/exp:channel:entries}
+			</ul>
+		</div>
+	</div>
+</div>
+{/if}
+{if segment_2 != ""}
+	{exp:channel:entries url_title="{segment_2}" disable="categories|category_fields|member_data|pagination" cache="yes" refresh="30"}
+		{if no_results}
+			{redirect="404"}
+		{/if}
+		{embed="site/header" title="{title}" meta="{slug}"}
+		<div id="main">
+			<div class="container" id="content">
+				<div class="span16">
+					<h1>{title}</h1>
+					<nav id="docsnav">
+						<ul>
+							<li><a href="{path='{segment_1}/{url_title}'}" {if segment_3 == ""}class="active"{/if}>description</a></li>
+							<li><a href="{path='{segment_1}/{url_title}/documentation'}" {if segment_3 == "documentation"}class="active"{/if}>documentation</a></li>
+							<li><a href="{path='{segment_1}/{url_title}/changelog'}" {if segment_3 == "changelog"}class="active"{/if}>changelog</a></li>
+							<li><a href="{path='{segment_1}/{url_title}/support'}" {if segment_3 == "support"}class="active"{/if}>support</a></li>
+						</ul>
+					</nav>
+				</div>
+				<div class="clearfix"></div>
+				{if segment_3 == ""}
+					<div class="span12">
+						{description}
+					</div>
+				{if:elseif segment_3 == "support"}
+					<div class="span12">
+						{support}
+					</div>
+				{if:elseif segment_3 == "documentation"}
+					<div class="span3">
+						<ul class="addons" data-spy="affix" data-offset-top="200">
+							{{segment_3}}
+								{if {segment_3}:installation}<li><a href="#installation">Installation</a></li>{/if}
+								{if {segment_3}:updating}<li><a href="#updating">Updating</a></li>{/if}
+								{if {segment_3}:settings}<li><a href="#settings">Settings</a></li>{/if}
+								{if {segment_3}:control_panel}<li><a href="#control_panel">Control Panel</a></li>{/if}
+								{if {segment_3}:template_tags}<li><a href="#template_tags">Template Tags</a></li>{/if}
+							{/{segment_3}}
+						</ul>
+					</div>
+					<div class="span13">
+						{{segment_3}}
+							{if {segment_3}:installation}
+								<div id="installation">
+									<h2>Installation</h2>
+									{{segment_3}:installation}
+								</div>
+							{/if}
+							{if {segment_3}:updating}
+								<div id="updating">
+									<h2>Updating</h2>
+									{{segment_3}:updating}
+								</div>
+							{/if}
+							{if {segment_3}:settings}
+								<div id="settings">
+									{{segment_3}:settings}
+								</div>
+							{/if}
+							{if {segment_3}:control_panel}
+								<div id="control_panel">
+									{{segment_3}:control_panel}
+								</div>
+							{/if}
+							{if {segment_3}:template_tags}
+								<div id="template_tags">
+									{{segment_3}:template_tags}
+								</div>
+							{/if}
+						{/{segment_3}}
+					</div>
+				{if:else}
+					<div class="span16">
+						{{segment_3}}
+							{if {segment_3}:info}
+								{{segment_3}:info}
+							{if:else}
+								{redirect="404"}
+							{/if}
+						{/{segment_3}}
+					</div>
+				{/if}
+			</div>
+		</div>
+	{/exp:channel:entries}
+{/if}
+{embed="site/footer"}

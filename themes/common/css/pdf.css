@@ -1,0 +1,48 @@
+@page {
+ 	margin-top: 0;
+}
+body{
+	font-family:'Helvetica';
+	color:#444;
+	font-size:11px;
+}
+table{
+	width:100%;
+	border:none;
+}
+tr{
+	border-bottom:1px solid #444;
+}
+th{
+	border-bottom: 1px solid #444;
+	font-weight:bold;
+	background-color:#444;
+	color:#fff;
+}
+strong{
+	font-family: Helvetica;
+	font-weight:bold;
+}
+.right{
+	text-align:right;
+}
+.center{
+	text-align:center;
+}
+table{
+	border-collapse:collapse;
+}
+.com {
+	color:#F54997;
+}
+h2{
+	padding:10px 0 0 0;
+}
+#container{
+	width:960px;
+	margin:0 auto;
+}
+h1{
+	font-family: 'Pacifico';
+	font-size:50px;
+}

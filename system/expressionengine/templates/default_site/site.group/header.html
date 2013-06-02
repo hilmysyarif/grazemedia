@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+
+	<!-- Basic Page Needs
+  ================================================== -->
+	<meta charset="utf-8">
+	<title>{embed:title} | Graze Media</title>
+	<meta name="description" content="{embed:meta}">
+	<meta name="author" content="">
+
+	<!-- Mobile Specific Metas
+  ================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- CSS
+  ================================================== -->
+	<link rel="stylesheet" href="{theme_folder_url}common/css/base.css">
+	<link rel="stylesheet" href="{theme_folder_url}common/css/bootstrap.min.css">
+	<link rel="stylesheet" href="{theme_folder_url}common/css/layout.css">
+	<link rel="stylesheet" href="{theme_folder_url}common/css/default.css">
+	<link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+	<link href="http://fonts.googleapis.com/css?family=Bree+Serif" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
+
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+	<!-- Favicons
+	================================================== -->
+	<link rel="shortcut icon" href="{theme_folder_url}images/favicon.ico">
+	<link rel="apple-touch-icon" href="{theme_folder_url}images/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="{theme_folder_url}images/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="{theme_folder_url}images/apple-touch-icon-114x114.png">
+	
+	<!-- Fonts
+	================================================== -->
+	<link href='http://fonts.googleapis.com/css?family=Overlock:400,700,900,400italic,700italic,900italic|Gentium+Basic:400,700,400italic,700italic|Homenaje|Karla:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
+	
+	
+	<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="{theme_folder_url}common/js/jquery.scrollTo-1.4.3.1-min.js"></script>
+	<script type="text/javascript" src="{theme_folder_url}common/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="{theme_folder_url}common/js/raphael.js"></script>
+	<script type="text/javascript" src="{theme_folder_url}common/js/main.js"></script>
+</head>
+<body>
+	<div id="wrapper"><!-- wrapper -->
+		<header id="header"><!-- header -->
+			<div class="container"><!-- container -->
+				<div class="span6" id="title">
+					<h1>
+						{if segment_1 == "" || segemnt_1 == "index"}
+							Graze<span class="com"> Media</span>
+						{if:else}
+							<a href="{path=''}">Graze<span class="com"> Media</span></a>
+						{/if}
+					</h1>
+				</div>
+				<div class="navbar">
+					<!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+				    <a class="btn btn-navbar" data-toggle="collapse" data-target="#nav">
+			    	    <span class="icon-bar"></span>
+				        <span class="icon-bar"></span>
+				        <span class="icon-bar"></span>
+					</a>
+					<nav class="span10 nav-collapse collapse" id="nav"><!-- navigation -->
+						<ul>
+							<li {if segment_1 == "add-ons"}class="active"{/if}><a href="{path='add-ons'}">add-ons</a></li>
+							<li {if segment_1 == "about"}class="active"{/if}><a href="{path='about'}">about</a></li>
+							<li {if segment_1 == "contact"}class="active"{/if}><a href="{path='contact'}">contact</a></li>
+							<li {if segment_1 == "articles"}class="active"{/if}><a href="{path='articles'}">articles</a></li>						
+						</ul>
+					</nav><!-- navigation -->
+				</div>
+			</div><!-- container -->
+		</header><!-- header -->

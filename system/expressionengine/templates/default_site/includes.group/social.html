@@ -1,0 +1,16 @@
+<div class="four columns" id="sidebar">
+	<h3>tweets</h3>
+	<ul class="twitter">
+	{exp:twittero screen_name="smokyjoedixon"
+	consumer_key="YRirXFC9WdB6LoXuIIT9Q"
+	consumer_secret="s5d1H8J1hCYuhUXjQ9PTnrxahylWAXN82vmfeJVMZPU"
+	oauth_token="45307693-1cEqXNfUZRXqVhDdzRUXogBd1o98zw3Ph7rHxnkTg"
+	oauth_token_secret="WqmU4RfDddpgBZvtaqvXZJie8gNu90dUBwrewm2gLY"
+	limit="5"
+	include_retweets = "false"
+	cache_limit="0"
+	tweets_to_display="5"}
+	<li>{twittero_tweet} <br /><span class="time">{twittero_time}</span></li>
+	{/exp:twittero}
+	</ul>
+</div>

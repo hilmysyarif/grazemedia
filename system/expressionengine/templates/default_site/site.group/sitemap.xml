@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<urlset xmlns="http://www.google.com/schemas/sitemap/0.84"> 
+<url> 
+<loc>{homepage}</loc> 
+<lastmod>{exp:stats}{last_entry_date format="{DATE_W3C}"}{/exp:stats}</lastmod> 
+<changefreq>always</changefreq> 
+<priority>1.0</priority> 
+</url>
+<url>
+<loc>{path='about'}</loc> 
+<lastmod>{exp:stats}{last_entry_date format="{DATE_W3C}"}{/exp:stats}</lastmod> 
+<changefreq>always</changefreq> 
+<priority>1.0</priority> 
+</url>
+<url> 
+<loc>{path='contact'}</loc> 
+<lastmod>{exp:stats}{last_entry_date format="{DATE_W3C}"}{/exp:stats}</lastmod> 
+<changefreq>always</changefreq> 
+<priority>1.0</priority> 
+</url>
+{exp:channel:entries channel="add-ons"}
+	<url>
+		<loc>{site_url}add-ons/{url_title}</loc>
+		<lastmod>{gmt_edit_date format="{DATE_W3C}"}</lastmod> 
+		<changefreq>weekly</changefreq> 
+		<priority>0.5</priority> 
+	</url>
+{/exp:channel:entries}
+{exp:channel:entries channel="articles"} 
+	<url>
+		<loc>{site_url}articles/{url_title}</loc>
+		<lastmod>{gmt_edit_date format="{DATE_W3C}"}</lastmod> 
+		<changefreq>weekly</changefreq> 
+		<priority>0.5</priority> 
+	</url> 
+{/exp:channel:entries}
+</urlset>
