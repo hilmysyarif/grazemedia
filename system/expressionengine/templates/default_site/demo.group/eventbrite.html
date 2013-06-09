@@ -2,6 +2,13 @@
 {if segment_3 == ""}
 	<div id="main">
 		<div class="container" id="content">
+			[code]
+				<table class="table table-striped">
+					{exp:eventbrite_ee:events}
+						<tr><td>{title}</td><td>{description}</td><td>{status}</td><td><a href="{path='demo/eventbrite/{id}'}">View</a></td></tr>
+					{/exp:eventbrite_ee:events}
+				</table>
+			[/code]
 			<table class="table table-striped">
 				{exp:eventbrite_ee:events}
 					<tr><td>{title}</td><td>{description}</td><td>{status}</td><td><a href="{path='demo/eventbrite/{id}'}">View</a></td></tr>
