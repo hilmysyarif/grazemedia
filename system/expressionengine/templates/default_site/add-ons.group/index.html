@@ -53,49 +53,49 @@
 					<div class="span3">
 						<ul class="addons" data-spy="affix" data-offset-top="200">
 							{{segment_3}}
-								{if {segment_3}:installation}<li><a href="#installation">Installation</a></li>{/if}
-								{if {segment_3}:updating}<li><a href="#updating">Updating</a></li>{/if}
-								{if {segment_3}:settings}<li><a href="#settings">Settings</a></li>{/if}
-								{if {segment_3}:control_panel}<li><a href="#control_panel">Control Panel</a></li>{/if}
-								{if {segment_3}:template_tags}<li><a href="#template_tags">Template Tags</a></li>{/if}
+								{if installation}<li><a href="#installation">Installation</a></li>{/if}
+								{if updating}<li><a href="#updating">Updating</a></li>{/if}
+								{if settings}<li><a href="#settings">Settings</a></li>{/if}
+								{if control_panel}<li><a href="#control_panel">Control Panel</a></li>{/if}
+								{if template_tags}<li><a href="#template_tags">Template Tags</a></li>{/if}
 							{/{segment_3}}
 						</ul>
 					</div>
 					<div class="span13">
-						{{segment_3}}
-							{if {segment_3}:installation}
-								<div id="installation">
-									<h2>Installation</h2>
-									{{segment_3}:installation}
-								</div>
-							{/if}
-							{if {segment_3}:updating}
-								<div id="updating">
-									<h2>Updating</h2>
-									{{segment_3}:updating}
-								</div>
-							{/if}
-							{if {segment_3}:settings}
-								<div id="settings">
-									<h2>Settings</h2>
-									{{segment_3}:settings}
-								</div>
-							{/if}
-							{if {segment_3}:control_panel}
-								<div id="control_panel">
-									<h2>Control Panel</h2>
-									{{segment_3}:control_panel}
-								</div>
-							{/if}
-							{if {segment_3}:template_tags}
-								<div id="template_tags">
-									<h2>Template Tags</h2>
-									{{segment_3}:template_tags}
-										{info}
-									{/{segment_3}:template_tags}
-								</div>
-							{/if}
-						{/{segment_3}}
+						{if installation}
+							<div id="installation">
+								<h2>Installation</h2>
+								{installation}
+							</div>
+						{/if}
+						{if updating}
+							<div id="updating">
+								<h2>Updating</h2>
+								{updating}
+							</div>
+						{/if}
+						{if settings}
+							<div id="settings">
+								<h2>Settings</h2>
+								{settings}
+							</div>
+						{/if}
+						{if control_panel}
+							<div id="control_panel">
+								<h2>Control Panel</h2>
+								{control_panel}
+							</div>
+						{/if}
+						{if template_tags}
+							<div id="template_tags">
+								<h2>Template Tags</h2>
+								{template_tags}
+									<div id="{template_tags:url_title">
+										{template_tags:info}
+									</div>
+								{/template_tags}
+							</div>
+						{/if}
 					</div>
 				{if:else}
 					<div class="span16">
