@@ -84,16 +84,14 @@
 								{control_panel}
 							</div>
 						{/if}
-						{if template_tags}
-							<div id="template_tags">
-								<h2>Template Tags</h2>
-								{template_tags}
-									<div id="{template_tags:url_title">
-										{template_tags:info}
-									</div>
-								{/template_tags}
-							</div>
-						{/if}
+						<div id="template_tags">
+							<h2>Template Tags</h2>
+							{template_tags}
+								<div id="{template_tags:url_title">
+									{template_tags:info}
+								</div>
+							{/template_tags}
+						</div>
 					</div>
 				{if:else}
 					<div class="span16">
