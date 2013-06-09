@@ -86,7 +86,7 @@
 						{/if}
 						<div id="template_tags">
 							<h2>Template Tags</h2>
-							<ul>
+							<ul class="addons">
 								{template_tags}
 									<li><a href="#{template_tags:url_title}">{template_tags:title}</a></li>
 								{/template_tags}
@@ -98,14 +98,12 @@
 							{/template_tags}
 						</div>
 					</div>
-				{if:else}
+				{if:elseif segment_3 == "changelog"}
 					<div class="span16">
-						{if segment_3}
-							{segment_3}
-						{if:else}
-							{redirect="404"}
-						{/if}
+						{changelog}
 					</div>
+				{if:else}
+					{redirect="404"}
 				{/if}
 			</div>
 		</div>
