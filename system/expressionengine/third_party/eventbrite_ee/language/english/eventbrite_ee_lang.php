@@ -9,6 +9,16 @@ $lang = array(
 
 //Index
 'eventbrite' => 'Eventbrite',
+'eventbrite_dashboard' => 'Dashboard',
+'live_events' => 'Live Events',
+'draft_events' => 'Draft Events',
+'completed_events' => 'Completed Events',
+'live_events_list' => 'Live Events List',
+'draft_events_list' => 'Draft Events List',
+'completed_events_list' => 'Completed Events List',
+'no_live_events' => ':(',
+'no_draft_events' => ':(',
+'no_completed_events' => ':(',
 
 //Settings
 'settings' => 'Settings',
@@ -62,6 +72,7 @@ $lang = array(
 'eventbrite_create' => 'Save',
 'eventbrite_event_saved' => 'Event Saved',
 'not_valid_event' => 'Event ID not supplied or invalid',
+'title' => 'Title',
 
 //Organizers
 'no_organizers_setup' => 'There are currently no organizers configured',

@@ -2,10 +2,10 @@
 	$res = '';
 
 	if(isset($id)){
-	$res .= form_open('C=addons_modules'.AMP.'M=show_module_cp'.AMP.'module-eventbrite_ee'.AMP.'method=venue'.AMP.'id='.$id);
+	$res .= form_open('C=addons_modules'.AMP.'M=show_module_cp'.AMP.'module=eventbrite_ee'.AMP.'method=venue'.AMP.'id='.$id);
 	}
 	else{
-		$res .= form_open('C=addons_modules'.AMP.'M=show_module_cp'.AMP.'module-eventbrite_ee'.AMP.'method=venue');
+		$res .= form_open('C=addons_modules'.AMP.'M=show_module_cp'.AMP.'module=eventbrite_ee'.AMP.'method=venue');
 	}
 	$this->table->set_template($cp_table_template);
 	

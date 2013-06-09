@@ -54,6 +54,42 @@ class Eventbrite_ee_mcp {
 	function index()
 	{
 		$this->_nav('eventbrite');
+		$events = ee()->eventbrite->user_list_events(array('only_display' => 'id,title,start_date,status'));
+		
+		$vars['completed_total'] = 0;
+		$vars['live_total'] = 0;
+		$vars['draft_total'] = 0;
+		$vars['theme_folder_url'] = URL_THIRD_THEMES.'eventbrite';
+		if(!isset($events['error'])){
+			foreach($events as $row){
+				foreach($row as $event){
+					switch ($event['event']['status']){
+						case 'Live':
+						$vars['live_total']++;
+						if(!isset($vars['live'][2])){
+							$vars['live'][] = $event;
+						}
+						break;
+
+						case 'Draft':
+						$vars['draft_total']++;
+						if(!isset($vars['draft'][2])){
+							$vars['draft'][] = $event;
+						}
+						break;
+
+						case 'Completed':
+						$vars['completed_total']++;
+						if(!isset($vars['completed'][2])){
+							$vars['completed'][] = $event;
+						}
+						break;
+					}
+				}
+			}
+		}
+
+		return ee()->load->view('index', $vars, TRUE);
 	}
 
 	function settings()
@@ -76,7 +112,7 @@ class Eventbrite_ee_mcp {
 
 		//If we have a result
 		if($result->num_rows() > 0){
-			$vars = $result->row();
+			$vars = $result->row_array();
 		}
 
 		//Set the nav
@@ -362,12 +398,10 @@ ee()->functions->redirect(BASE.AMP.'C=addons_modules'.AMP.'M=show_module_cp'.AMP
 			
 			//Is this an existing event with id?
 			if(ee()->input->get_post('id')){
-				echo 'hello';
 				//If it exists, use EB API to update them
 				$vars['event']['id'] = ee()->input->get('id');
 				$update = ee()->eventbrite->event_update($vars['event']);
 				
-				print_r($update);
 				//Have we got errors? Pass to error handler
 				if(isset($update['error'])){
 					$this->_error_handler($update);
@@ -769,9 +803,8 @@ ee()->functions->redirect(BASE.AMP.'C=addons_modules'.AMP.'M=show_module_cp'.AMP
 	function _error_handler($errors)
 	{
 		$output = '';
-
+		if(isset($errors['error']['error_type']) && $errors['error']['error_type'] == 'Not Found'){return;}
 		foreach($errors as $error){
-			if($error['error_type'] == 'Not Found'){return;}
 			$output .= $error['error_message'].'<br />';
 		}
 		return show_error($output);
@@ -806,6 +839,8 @@ ee()->functions->redirect(BASE.AMP.'C=addons_modules'.AMP.'M=show_module_cp'.AMP
 
 		//Navigation
 		ee()->cp->set_right_nav(array(
+				'eventbrite_dashboard' => BASE.AMP.'C=addons_modules'.AMP.'M=show_module_cp'
+	                .AMP.'module=eventbrite_ee',
 		        'eventbrite_events' => BASE.AMP.'C=addons_modules'.AMP.'M=show_module_cp'
 	                .AMP.'module=eventbrite_ee'.AMP.'method=events',
 		        'eventbrite_venues' => BASE.AMP.'C=addons_modules'.AMP.'M=show_module_cp'
