@@ -111,7 +111,7 @@
 /* #Lists
 ================================================== */
 	ul, ol { margin-bottom: 20px; }
-	ul { list-style: disc outside; margin-left:20px;}
+	ul { list-style: none outside; }
 	ol { list-style: decimal; }
 	ol, ul.square, ul.circle, ul.disc { margin-left: 30px; }
 	ul.square { list-style: square outside; }
