@@ -88,7 +88,7 @@
 							<h2>Template Tags</h2>
 							<ul>
 								{template_tags}
-									<li><a href="#{url_title}">{title}</li>
+									<li><a href="#{template_tags:url_title}">{template_tags:title}</li>
 								{/template_tags}
 							</ul>
 							{template_tags}
@@ -100,7 +100,11 @@
 					</div>
 				{if:else}
 					<div class="span16">
-						{segment_3}
+						{if segment_3}
+							{segment_3}
+						{if:else}
+							{redirect="404"}
+						{/if}
 					</div>
 				{/if}
 			</div>
