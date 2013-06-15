@@ -1,5 +1,5 @@
 {exp:channel:entries entry_id="2"}
-{embed="site/header" title="{title}" meta="Contact details for shape.it"}
+{embed="includes/.header" title="{title}" meta="Contact details for shape.it"}
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 <script type="text/javascript" src="{theme_folder_url}third_party/mx_google_map/mxgooglemap.js"></script>
 <div id="main">
@@ -11,9 +11,9 @@
 			{location_map:map maptype="ROADMAP" mt_control_style = "DROPDOWN_MENU" scrollwheel = "false" doubleclickzoomoff="true" height="400px"}
 		</div>
 		{/exp:channel:entries}
-		{!--<div class="four columns offset-by-one">
-			{embed="includes/social"}
+		{!--<div class="span4">
+			{embed="includes/.social"}
 		</div>--}
 	</div>
 </div>
-{embed="site/footer"}
+{embed="includes/.footer"}
