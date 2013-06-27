@@ -53,11 +53,6 @@ class Eventbrite_ee_upd {
 	 */
 	public function __construct()
 	{
-		// --------------------------------------
-		// Get global object
-		// --------------------------------------
-
-		$this->EE =& get_instance();
 
 		// --------------------------------------
 		// Set class name
@@ -81,22 +76,21 @@ class Eventbrite_ee_upd {
 		// --------------------------------------
 
 		// Load DB Forge class
-		$this->EE->load->dbforge();
+		ee()->load->dbforge();
 
 		// Define fields to create
-		$this->EE->dbforge->add_field(array(
-			'app_key'  => array('type' => 'varchar', 'constraint' => '50'),
+		ee()->dbforge->add_field(array(
 			'user_key' => array('type' => 'varchar', 'constraint' => '50'),
 		));
 
 		// Creates the table
-		$this->EE->dbforge->create_table('eventbrite_settings');
+		ee()->dbforge->create_table('eventbrite_settings');
 
 		// --------------------------------------
 		// Add row to modules table
 		// --------------------------------------
 
-		$this->EE->db->insert('modules', array(
+		ee()->db->insert('modules', array(
 			'module_name'    => $this->class_name,
 			'module_version' => $this->version,
 			'has_cp_backend' => 'y'
@@ -118,7 +112,7 @@ class Eventbrite_ee_upd {
 		// get module id
 		// --------------------------------------
 
-		$query = $this->EE->db->select('module_id')
+		$query = ee()->db->select('module_id')
 		       ->from('modules')
 		       ->where('module_name', $this->class_name)
 		       ->get();
@@ -127,22 +121,22 @@ class Eventbrite_ee_upd {
 		// remove references from module_member_groups
 		// --------------------------------------
 
-		$this->EE->db->where('module_id', $query->row('module_id'));
-		$this->EE->db->delete('module_member_groups');
+		ee()->db->where('module_id', $query->row('module_id'));
+		ee()->db->delete('module_member_groups');
 
 		// --------------------------------------
 		// remove references from modules
 		// --------------------------------------
 
-		$this->EE->db->where('module_name', $this->class_name);
-		$this->EE->db->delete('modules');
+		ee()->db->where('module_name', $this->class_name);
+		ee()->db->delete('modules');
 
 		// --------------------------------------
 		// Uninstall tables
 		// --------------------------------------
 
-		$this->EE->load->dbforge();
-		$this->EE->dbforge->drop_table('eventbrite_settings');
+		ee()->load->dbforge();
+		ee()->dbforge->drop_table('eventbrite_settings');
 
 		return TRUE;
 	}

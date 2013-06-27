@@ -73,6 +73,7 @@ $lang = array(
 'eventbrite_event_saved' => 'Event Saved',
 'not_valid_event' => 'Event ID not supplied or invalid',
 'title' => 'Title',
+'create_ticket' => 'Currency can be updated, but, due to limitations in the API, will not be displayed until a ticket has been created',
 
 //Organizers
 'no_organizers_setup' => 'There are currently no organizers configured',

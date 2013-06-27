@@ -112,9 +112,6 @@ li.ui-timepicker-selected .ui-timepicker-duration,
   top: -6px;
   left: 7px;
 }
-.ui-datepicker > div {
-  display: none;
-}
 .ui-datepicker.days div.ui-datepicker-days {
   display: block;
 }

@@ -14,6 +14,7 @@ if ( ! defined('EVENTBRITE_NAME'))
 	define('EVENTBRITE_PACKAGE', 'eventbrite_ee');
 	define('EVENTBRITE_VERSION', '0.0.1');
 	define('EVENTBRITE_DOCS',    'http://grazemedia.com/');
+	define('EVENTBRITE_APP_KEY', 'KO4EXY7NGWQLBA5QNT');
 }
 
 /**

@@ -8,11 +8,6 @@
 	$this->table->set_heading(lang('option'), lang('value'));
 	
 	$this->table->add_row(
-		form_label(lang('app_key'), 'app_key'),
-		form_input('app_key', $app_key)
-	);
-	
-	$this->table->add_row(
 		form_label(lang('user_key'), 'user_key'),
 		form_input('user_key', $user_key)
 	);

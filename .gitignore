@@ -13,3 +13,6 @@ sized/
 thumbs/
 _thumbs/
 */expressionengine/cache/*
+
+# htaccess
+.htaccess

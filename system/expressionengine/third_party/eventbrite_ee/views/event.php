@@ -52,7 +52,8 @@
 	
 	$this->table->add_row(
 		form_label(lang('personalized_url'), 'personalized_url'),
-		form_input('personalized_url', $event['url'], 'id="personalized_url"')
+		'<div>' . $event['url'] . ' - <a href="#" id="url_click">' .lang('edit') . '</a></div><div id="url" style="display:none">' .
+		form_input('personalized_url', '', 'id="personalized_url"') . '</div>'
 	);
 
 	$venue = (isset($event['venue_id'])) ? $event['venue_id'] : $event['venue']['id'];
@@ -74,7 +75,7 @@
 	$currency = (isset($event['tickets'][0]['ticket']['currency'])) ? $event['tickets'][0]['ticket']['currency'] : '';
 	$this->table->add_row(
 		form_label(lang('currency'), 'currency'),
-		form_input('currency', $currency, 'id="currency"')
+		form_input('currency', $currency, 'id="currency" placeholder="' . lang('create_ticket') . '"')
 	);
 	
 	$status_select = ($event['status'] == 'Draft') ? 'draft' : 'live';
@@ -160,6 +161,10 @@
 	$res .= form_close();
 	$res .= "<script>
        	$(document).ready(function() {
+       		$('#url_click').click(function(e){
+       			e.preventDefault();
+       			$('#url').slideToggle();
+       		});
 			$('input.color-picker').focus(function(){
 				var input = this;
 				$(this).ColorPicker({

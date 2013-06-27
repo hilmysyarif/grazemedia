@@ -1,29 +1,24 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-
 // include config file
 include(PATH_THIRD.'eventbrite_ee/config.php');
-
 
 class Eventbrite_ee {
 	
 										
 	function __construct()
 	{
-        // Make a local reference to the ExpressionEngine super object
-        $this->EE =& get_instance();
-
         //Get settings from db
         $this->authentication_tokens = $this->_get_settings();
         
-		$this->EE->load->library('Eventbrite', $this->authentication_tokens);
+		ee()->load->library('Eventbrite', $this->authentication_tokens);
 		//$this->authentication_tokens
     }
 
     function events()
     {
     	$variables = array();
-    	$events = $this->EE->eventbrite->user_list_events();
+    	$events = ee()->eventbrite->user_list_events();
     	if(isset($events['error'])){
 			return $events['error']['error_message'];
 		}
@@ -35,17 +30,17 @@ class Eventbrite_ee {
 			}
 		}
 		
-		$output = $this->EE->TMPL->parse_variables($this->EE->TMPL->tagdata, $variables);
+		$output = ee()->TMPL->parse_variables(ee()->TMPL->tagdata, $variables);
 		return $output;
     }
 	
 	function event()
 	{
-		if(!$id = $this->EE->TMPL->fetch_param('id')){
+		if(!$id = ee()->TMPL->fetch_param('id')){
 			return;
 		}
 		
-		$event = $this->EE->eventbrite->event_get(array('id' => $id));
+		$event = ee()->eventbrite->event_get(array('id' => $id));
 		if(isset($event['error'])){
 			return $event['error']['error_message'];
 		}
@@ -53,7 +48,7 @@ class Eventbrite_ee {
 		//echo '<pre>';
 		//print_r($variables);
 		//echo '</pre>';
-		$output = $this->EE->TMPL->parse_variables($this->EE->TMPL->tagdata, $variables);
+		$output = ee()->TMPL->parse_variables(ee()->TMPL->tagdata, $variables);
 		return $output;		
 	}
 

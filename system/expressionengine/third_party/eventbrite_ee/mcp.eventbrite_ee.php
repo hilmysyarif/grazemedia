@@ -44,6 +44,7 @@ class Eventbrite_ee_mcp {
 						);
 
 		$this->authentication_tokens = $this->_get_settings();
+		$this->authentication_tokens['app_key'] = EVENTBRITE_APP_KEY;
 
 		ee()->load->library('Eventbrite', $this->authentication_tokens);
 		ee()->load->library('table');
@@ -65,6 +66,13 @@ class Eventbrite_ee_mcp {
 				foreach($row as $event){
 					switch ($event['event']['status']){
 						case 'Live':
+						$vars['live_total']++;
+						if(!isset($vars['live'][2])){
+							$vars['live'][] = $event;
+						}
+						break;
+
+						case: 'Started':
 						$vars['live_total']++;
 						if(!isset($vars['live'][2])){
 							$vars['live'][] = $event;
@@ -94,17 +102,16 @@ class Eventbrite_ee_mcp {
 
 	function settings()
 	{
-		$app_key = ee()->input->post('app_key');
 		$user_key = ee()->input->post('user_key');
 
 		// Prep the array
-		$vars = array('app_key' => $app_key, 'user_key' => $user_key);
+		$vars = array('user_key' => $user_key);
 
 		if(ee()->input->post('submit')){
 			ee()->db->empty_table('eventbrite_settings');
 			ee()->db->insert('eventbrite_settings', $vars);
 			ee()->session->set_flashdata('message_success', lang('eventbrite_settings_updated'));
-						ee()->functions->redirect(BASE.AMP.'C=addons_modules'.AMP.'M=show_module_cp'.AMP.'module=eventbrite_ee'.AMP.'method=settings');
+			ee()->functions->redirect(BASE.AMP.'C=addons_modules'.AMP.'M=show_module_cp'.AMP.'module=eventbrite_ee'.AMP.'method=settings');
 		}
 
 		//Get what is stored in the db
@@ -365,7 +372,7 @@ ee()->functions->redirect(BASE.AMP.'C=addons_modules'.AMP.'M=show_module_cp'.AMP
 			'end_date' => ee()->input->post('end_date') . ' ' . ee()->input->post('end_time'),
 			'timezone' => ee()->input->post('timezone'),
 			'privacy' => ee()->input->post('privacy'),
-			'url' => ee()->input->post('personalized_url'),
+			'url' => str_replace('http://', '', ee()->input->post('personalized_url')),
 			'venue_id' => ee()->input->post('venue_id'),
 			'organizer_id' => ee()->input->post('organizer_id'),
 			'capacity' => ee()->input->post('capacity'),
@@ -400,6 +407,7 @@ ee()->functions->redirect(BASE.AMP.'C=addons_modules'.AMP.'M=show_module_cp'.AMP
 			if(ee()->input->get_post('id')){
 				//If it exists, use EB API to update them
 				$vars['event']['id'] = ee()->input->get('id');
+	
 				$update = ee()->eventbrite->event_update($vars['event']);
 				
 				//Have we got errors? Pass to error handler
@@ -441,7 +449,6 @@ ee()->functions->redirect(BASE.AMP.'C=addons_modules'.AMP.'M=show_module_cp'.AMP
 				
 				//Use EB API to grab data based on ID
 				$event = ee()->eventbrite->event_get(array('id' => ee()->input->get('id'), 'display' => 'custom_header,custom_footer,confirmation_page,confirmation_email'));
-				//print_r($event);
 				
 				//If we have errors, pass to error handler
 				if(isset($event['error'])){
