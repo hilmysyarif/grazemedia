@@ -1,6 +1,6 @@
 $(function() {
 	var DATEPICKER_FORMAT = 'yyyy-m-d';
-	var TIMEPICKER_FORMAT = 'g:i';
+	var TIMEPICKER_FORMAT = 'g:i:s';
 	var DATE_FORMAT = 'Y-n-j'; // for this format see http://php.net/manual/function.date.php
 
 	$('.datepair input.date').each(function(){
