@@ -72,7 +72,7 @@ class Eventbrite_ee_mcp {
 						}
 						break;
 
-						case: 'Started':
+						case 'Started':
 						$vars['live_total']++;
 						if(!isset($vars['live'][2])){
 							$vars['live'][] = $event;
