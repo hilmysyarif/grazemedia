@@ -1,0 +1,93 @@
+{embed="store_example/_header"}
+
+{exp:channel:entries url_title="{segment_3}" limit="1"}
+
+	<ul class="breadcrumb">
+		<li><a href="{path='store_example'}">Example Store</a> <span class="divider">&raquo;</span></li>
+		<li class="active">{title}</li>
+	</ul>
+
+	<div class="row">
+		<div class="span8">
+
+
+			<div class="page-header">
+				<h1>{title} <small>just another awesome product</small></h1>
+			</div>
+
+			{exp:store:product
+				entry_id="{entry_id}"
+				form_class="form-horizontal"
+				return="{segment_1}/{segment_2}/{segment_3}"}
+
+				<div class="control-group">
+					<label class="control-label">SKU</label>
+					<div class="controls">
+						<span class="store_product_sku"><!-- automatically set --></span>
+					</div>
+				</div>
+
+				<div class="control-group">
+					<label class="control-label">Stock Level</label>
+					<div class="controls">
+						<span class="store_product_stock"><!-- automatically set --></span>
+					</div>
+				</div>
+
+				<div class="control-group">
+					<label class="control-label">Price</label>
+					<div class="controls">
+						{if on_sale}
+							<del>{regular_price}</del><br />
+							{price}
+							<span class="label label-success">Save {you_save} ({you_save_percent}%)</span>
+						{if:else}
+							{regular_price}
+						{/if}
+					</div>
+				</div>
+
+				{modifiers}
+
+					<div class="control-group">
+						<label class="control-label" for="{modifier_input_name}">{modifier_name}</label>
+						<div class="controls">
+							{if modifier_type == 'var' OR modifier_type == 'var_single_sku'}
+								<select id="{modifier_input_name}" name="{modifier_input_name}">
+									{modifier_options}
+										<option value="{option_id}">
+											{option_name} {if price_mod_val} ({price_mod}) {/if}
+										</option>
+									{/modifier_options}
+								</select>
+							{if:else}
+								<input type="text" id="{modifier_input_name}" name="{modifier_input_name}" value="" />
+							{/if}
+							<p class="help-block">{modifier_instructions}</p>
+						</div>
+					</div>
+
+				{/modifiers}
+
+				<div class="control-group">
+					<label class="control-label" for="item_qty">Quantity</label>
+					<div class="controls">
+						<input type="text" id="item_qty" name="item_qty" class="input-mini" value="{min_order_qty}" />
+					</div>
+				</div>
+
+				<div class="form-actions">
+					<input type="submit" name="submit" value="Add to Cart" class="btn btn-primary" />
+				</div>
+
+			{/exp:store:product}
+
+		</div>
+		<div class="span4">
+			{embed="store_example/_cart"}
+		</div>
+	</div>
+
+{/exp:channel:entries}
+
+{embed="store_example/_footer"}

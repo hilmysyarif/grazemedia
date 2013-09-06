@@ -52,7 +52,7 @@
 	
 	$this->table->add_row(
 		form_label(lang('personalized_url'), 'personalized_url'),
-		'<div>' . $event['url'] . ' - <a href="#" id="url_click">' .lang('edit') . '</a></div><div id="url" style="display:none">' .
+		'<div><a href="' . $event['url'] . '">' . $event['url'] . '</a> - <a href="#" id="url_click">' .lang('edit') . '</a></div><div id="url" style="display:none">' .
 		form_input('personalized_url', '', 'id="personalized_url"') . '</div>'
 	);
 

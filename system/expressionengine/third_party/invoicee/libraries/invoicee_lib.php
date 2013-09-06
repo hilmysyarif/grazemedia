@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Invoicee
+class Invoicee_lib
 {
 	public function __construct()
 	{

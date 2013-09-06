@@ -1,0 +1,188 @@
+{embed="store_example/_header"}
+
+<ul class="breadcrumb">
+	<li><a href="{path='store_example'}">Example Store</a> <span class="divider">&raquo;</span></li>
+	<li><a href="{path='store_example/checkout'}">Checkout</a> <span class="divider">&raquo;</span></li>
+	<li class="active">Customer Details</li>
+</ul>
+
+<div class="page-header">
+	<div class="pull-right"><div class="span2">
+		<div class="progress progress-info progress-striped"><div class="bar" style="width:60%"></div></div>
+	</div></div>
+	<h1>Customer Details <small>the second step of a sample checkout process</small></h1>
+</div>
+
+{exp:store:checkout
+	form_class="form-horizontal"
+	next="store_example/checkout3"
+	error_handling="inline"
+	error_delimiters='<span class="help-inline">|</span>'
+	require="name|address1|address3|country"}
+
+	{if no_items}
+		{redirect="store_example/checkout"}
+	{/if}
+
+	<fieldset id="billing_details">
+		<legend>Billing Details</legend>
+
+		<div class="control-group {if error:billing_name}error{/if}">
+			<label class="control-label" for="billing_name">Name</label>
+			<div class="controls">
+				{field:billing_name} {error:billing_name}
+			</div>
+		</div>
+
+		<div class="control-group {if error:billing_address1}error{/if}">
+			<label class="control-label" for="billing_address1">Address</label>
+			<div class="controls">
+				{field:billing_address1} {error:billing_address1}
+			</div>
+		</div>
+
+		<div class="control-group {if error:billing_address2}error{/if}">
+			<div class="controls">
+				{field:billing_address2} {error:billing_address2}
+			</div>
+		</div>
+
+		<div class="control-group {if error:billing_address3}error{/if}">
+			<label class="control-label" for="billing_address3">City</label>
+			<div class="controls">
+				{field:billing_address3} {error:billing_address3}
+			</div>
+		</div>
+
+		<div class="control-group {if error:billing_postcode}error{/if}">
+			<label class="control-label" for="billing_postcode">Postcode</label>
+			<div class="controls">
+				{field:billing_postcode} {error:billing_postcode}
+			</div>
+		</div>
+
+		<div class="control-group {if error:billing_region}error{/if}">
+			<label class="control-label" for="billing_region">Region</label>
+			<div class="controls">
+				{field:billing_region} {error:billing_region}
+			</div>
+		</div>
+
+		<div class="control-group {if error:billing_country}error{/if}">
+			<label class="control-label" for="billing_country">Country</label>
+			<div class="controls">
+				{field:billing_country} {error:billing_country}
+			</div>
+		</div>
+
+		<div class="control-group {if error:billing_phone}error{/if}">
+			<label class="control-label" for="billing_phone">Phone</label>
+			<div class="controls">
+				{field:billing_phone} {error:billing_phone}
+			</div>
+		</div>
+
+		<div class="control-group {if error:order_email}error{/if}">
+			<label class="control-label" for="order_email">Email</label>
+			<div class="controls">
+				{field:order_email} {error:order_email}
+			</div>
+		</div>
+
+	</fieldset>
+
+	<fieldset>
+		<legend>Shipping Details</legend>
+
+		<div class="control-group">
+			<div class="controls">
+				<label for="shipping_same_as_billing" class="checkbox">
+					{field:shipping_same_as_billing} Same as Billing Details
+				</label>
+			</div>
+		</div>
+
+		<div id="shipping_details_drawer">
+
+			<div class="control-group {if error:shipping_name}error{/if}">
+				<label class="control-label" for="shipping_name">Name</label>
+				<div class="controls">
+					{field:shipping_name} {error:shipping_name}
+				</div>
+			</div>
+
+			<div class="control-group {if error:shipping_address1}error{/if}">
+				<label class="control-label" for="shipping_address1">Address</label>
+				<div class="controls">
+					{field:shipping_address1} {error:shipping_address1}
+				</div>
+			</div>
+
+			<div class="control-group {if error:shipping_address2}error{/if}">
+				<div class="controls">
+					{field:shipping_address2} {error:shipping_address2}
+				</div>
+			</div>
+
+			<div class="control-group {if error:shipping_address3}error{/if}">
+				<label class="control-label" for="shipping_address3">City</label>
+				<div class="controls">
+					{field:shipping_address3} {error:shipping_address3}
+				</div>
+			</div>
+
+			<div class="control-group {if error:shipping_postcode}error{/if}">
+				<label class="control-label" for="shipping_postcode">Postcode</label>
+				<div class="controls">
+					{field:shipping_postcode} {error:shipping_postcode}
+				</div>
+			</div>
+
+			<div class="control-group {if error:shipping_region}error{/if}">
+				<label class="control-label" for="shipping_region">Region</label>
+				<div class="controls">
+					{field:shipping_region} {error:shipping_region}
+				</div>
+			</div>
+
+			<div class="control-group {if error:shipping_country}error{/if}">
+				<label class="control-label" for="shipping_country">Country</label>
+				<div class="controls">
+					{field:shipping_country} {error:shipping_country}
+				</div>
+			</div>
+
+			<div class="control-group {if error:shipping_phone}error{/if}">
+				<label class="control-label" for="shipping_phone">Phone</label>
+				<div class="controls">
+					{field:shipping_phone} {error:shipping_phone}
+				</div>
+			</div>
+
+		</div>
+
+	</fieldset>
+
+	<div class="form-actions">
+		<a href="{path='store_example/checkout'}" class="btn">Back</a>
+		<input type="submit" name="next" value="Review Order" class="btn btn-primary" />
+	</div>
+
+{/exp:store:checkout}
+
+<script type="text/javascript">
+$(function() {
+	$('#shipping_same_as_billing').change(function() {
+		if (this.checked) {
+			$('#shipping_details_drawer').slideUp();
+		} else {
+			$('#shipping_details_drawer').slideDown();
+		}
+	});
+	if ($('#shipping_same_as_billing').is(':checked')) {
+		$('#shipping_details_drawer').hide();
+	}
+});
+</script>
+
+{embed="store_example/_footer"}

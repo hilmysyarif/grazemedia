@@ -1,0 +1,179 @@
+{embed="store_example/_header"}
+
+<ul class="breadcrumb">
+	<li><a href="{path='store_example'}">Example Store</a> <span class="divider">&raquo;</span></li>
+	<li><a href="{path='store_example/checkout'}">Checkout</a> <span class="divider">&raquo;</span></li>
+	<li><a href="{path='store_example/checkout2'}">Customer Details</a> <span class="divider">&raquo;</span></li>
+	<li class="active">Confirm Order</li>
+</ul>
+
+<div class="page-header">
+	<div class="pull-right"><div class="span2">
+		<div class="progress progress-info progress-striped"><div class="bar" style="width:90%"></div></div>
+	</div></div>
+	<h1>Confirm Order <small>the third and final step of a sample checkout process</small></h1>
+</div>
+
+{exp:store:checkout
+	form_class="form-horizontal"
+	return="store_example/order/ORDER_HASH"
+	error_handling="inline"
+	error_delimiters='<span class="help-inline">|</span>'}
+
+	{if no_items}
+		{redirect="store_example/checkout"}
+	{/if}
+
+	<div class="row">
+		<div class="span8">
+
+			<div class="row">
+				<div class="span4">
+					<fieldset>
+						<legend>Billing Details</legend>
+						<div class="control-group">
+							<div><b>{billing_name}</b></div>
+							<div>{billing_address1}</div>
+							<div>{billing_address2}</div>
+							<div>{billing_address3} {billing_postcode}</div>
+							<div>{billing_region_name}</div>
+							<div>{billing_country_name}</div>
+							<div>{billing_phone}</div>
+							<div>{order_email}</div>
+						</div>
+					</fieldset>
+				</div>
+				<div class="span4">
+					<fieldset>
+						<legend>Shipping Details</legend>
+						<div class="control-group">
+							{if shipping_same_as_billing}
+								Same as Billing Details
+							{if:else}
+								<div><b>{shipping_name}</b></div>
+								<div>{shipping_address1}</div>
+								<div>{shipping_address2}</div>
+								<div>{shipping_address3} {shipping_postcode}</div>
+								<div>{shipping_region_name}</div>
+								<div>{shipping_country_name}</div>
+								<div>{shipping_phone}</div>
+							{/if}
+						</div>
+					</fieldset>
+				</div>
+			</div>
+
+			<fieldset>
+				<legend>Payment</legend>
+
+				{if error:payment_method}
+					<div class="control-group">
+						<div class="alert alert-error">{error:payment_method}</div>
+					</div>
+				{/if}
+
+				<div class="control-group">
+					<label class="control-label" for="payment_method">Payment Method</label>
+					<div class="controls">
+						<select id="payment_method" name="payment_method">
+							<option value=""></option>
+							{payment_method_options}
+						</select>
+						<p class="help-block">
+							<span class="label label-info">Note</span>
+							To accept credit card payments directly on your site, you will need to set up an SSL certificate. For more information, contact your web host.
+						</p>
+					</div>
+				</div>
+
+				<div class="control-group">
+					<label class="control-label" for="payment_card_no">Card No</label>
+					<div class="controls">
+						<input type="text" id="payment_card_no" name="payment[card_no]" value="" />
+					</div>
+				</div>
+
+				<div class="control-group">
+					<label class="control-label" for="payment_name">Name</label>
+					<div class="controls">
+						<input type="text" id="payment_name" name="payment[name]" value="" />
+					</div>
+				</div>
+
+				<div class="control-group">
+					<label class="control-label" for="payment_exp_month">Expiry</label>
+					<div class="controls">
+						<select id="payment_exp_month" name="payment[exp_month]" style="width:auto">
+							<option value=""></option>
+							{exp_month_options}
+						</select>
+						<select id="payment_exp_year" name="payment[exp_year]" style="width:auto">
+							<option value=""></option>
+							{exp_year_options}
+						</select>
+					</div>
+				</div>
+
+				<div class="control-group">
+					<label class="control-label" for="payment_csc">CSC</label>
+					<div class="controls">
+						<input type="text" id="payment_csc" name="payment[csc]" value="" class="input-mini" />
+					</div>
+				</div>
+
+			</fieldset>
+
+		</div>
+
+		<div class="span4"><div class="well">
+			<fieldset>
+				<legend>Order Summary</legend>
+
+				<table class="table table-condensed">
+					<thead>
+						<tr>
+							<th style="width:60%">Product</th>
+							<th style="text-align:right">Total</th>
+						</tr>
+					</thead>
+					<tbody>
+						{items}
+							<tr>
+								<td>{item_qty} &times; {title}</td>
+								<td style="text-align:right">{item_subtotal}</td>
+							</tr>
+						{/items}
+						<tr>
+							<th>Subtotal</th>
+							<th style="text-align:right">{order_subtotal}</th>
+						</tr>
+						{if shipping_method_id}
+							<tr>
+								<td>Shipping ({shipping_method})</td>
+								<td style="text-align:right">{order_shipping}</td>
+							</tr>
+						{/if}
+						{if order_tax_val}
+							<tr>
+								<td>{tax_name} ({tax_percent}%)</td>
+								<td style="text-align:right">{order_tax}</td>
+							</tr>
+						{/if}
+						<tr>
+							<th>Total</th>
+							<th style="text-align:right">{order_total}</th>
+						</tr>
+					</tbody>
+				</table>
+			</fieldset>
+		</div></div>
+	</div>
+
+	<div class="form-actions">
+		<a href="{path='store_example/checkout2'}" class="btn">Back</a>
+		<input type="submit" name="submit" value="Place Order" class="btn btn-success" />
+	</div>
+
+{/exp:store:checkout}
+
+{embed="store_example/_footer"}

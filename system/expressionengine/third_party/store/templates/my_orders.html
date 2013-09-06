@@ -1,0 +1,56 @@
+{embed="store_example/_header"}
+
+<ul class="breadcrumb">
+	<li><a href="{path='store_example'}">Example Store</a> <span class="divider">&raquo;</span></li>
+	<li class="active">My Orders</li>
+</ul>
+
+<div class="page-header">
+	<h1>My Orders <small>display all orders from the current member</small></h1>
+</div>
+
+{if logged_out}
+	<div class="alert alert-error">You must be logged in to access this page.</div>
+{/if}
+{if logged_in}
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th style="width:40%">Items</th>
+				<th>Date</th>
+				<th>Total</th>
+				<th>Status</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			{exp:store:orders member_id='CURRENT_USER' order_by='order_date' sort='desc'}
+
+				{if no_orders}
+					<tr>
+						<td colspan="5">You haven't placed any orders yet!</td>
+					</tr>
+				{/if}
+
+				<tr>
+					<td>{order_id}</td>
+					<td>
+						{items}
+							{item_qty} &times; {title}<br />
+						{/items}
+					</td>
+					<td>{order_date format="%j %M %Y"}</td>
+					<td>{order_total}</td>
+					<td>{order_status}</td>
+					<td><a href="{path='store_example/order/{order_hash}'}">Details</a></td>
+				</tr>
+
+			{/exp:store:orders}
+		</tbody>
+	</table>
+
+{/if}
+
+{embed="store_example/_footer"}

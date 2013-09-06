@@ -7,7 +7,7 @@ class Invoicee_mcp {
 		$this->EE =& get_instance();
 		$this->EE->load->library('javascript');
 		$this->EE->load->library('table');
-		$this->EE->load->library('invoicee');
+		//$this->EE->load->library('invoicee');
 		$this->EE->load->helper('form');
 		$this->EE->load->library('form_validation');
 		$this->EE->load->helper(array('string', 'snippets'));
@@ -71,11 +71,11 @@ class Invoicee_mcp {
 						lang('paid') => $vars['paid'],
 						lang('prospective') => $vars['prospective'],
 		);
-		$settings = $this->EE->invoicee->_get_settings('invoice');
+		$settings = $this->_get_settings('invoice');
 		$vars['prospective']  = $settings['invoice_symbol'] . number_format($vars['prospective'], 2, '.', ',');
 		$vars['outstanding']  = $settings['invoice_symbol'] . number_format($vars['outstanding'], 2, '.', ',');
 		$vars['paid']  = $settings['invoice_symbol'] . number_format($vars['paid'], 2, '.', ',');
-		$clients = $this->EE->invoicee->_get_settings('client');
+		$clients = $this->_get_settings('client');
 		$vars['clients'] = $clients['member_groups'];
 		
 		$this->EE->javascript->output('drawChart('.$this->EE->javascript->generate_json($invoices, TRUE).', "'.lang('chart_title').'");');
@@ -199,7 +199,7 @@ class Invoicee_mcp {
 		//Initialise $vars array
 		$vars = array();
 		$vars['theme_folder_url'] = $this->EE->config->slash_item('theme_folder_url');
-		$settings = $this->EE->invoicee->_get_settings();
+		$settings = $this->_get_settings();
 		$vars['client_settings'] = $settings['client_settings'];
 		$vars['email_settings'] = $settings['email_settings'];
 		$vars['invoice_settings'] = $settings['invoice_settings'];
@@ -241,7 +241,7 @@ class Invoicee_mcp {
 		//Initilaise the $vars array
 		$vars = array();
 		$vars['keyword'] = '';
-		$settings = $this->EE->invoicee->_get_settings();
+		$settings = $this->_get_settings();
 
 		//Get all the client data
 		$this->EE->db->select('*');
@@ -259,7 +259,7 @@ class Invoicee_mcp {
 			$vars['results'] = 0;
 		}
 		else{
-			$settings = $this->EE->invoicee->_get_settings('client');
+			$settings = $this->_get_settings('client');
 			foreach($query->result_array() as $row){
 				$address = $row['m_field_id_'.$settings['client_address_one']] . ', ';
 				if($row['m_field_id_'.$settings['client_address_two']]){
@@ -295,7 +295,7 @@ class Invoicee_mcp {
 		//Initilaise the $vars array
 		$vars = array();
 		$vars['keyword'] = '';
-		//$settings = $this->EE->invoicee->_get_settings();
+		//$settings = $this->_get_settings();
 
 		//Get all the client data
 		$this->EE->db->select('*');
@@ -311,7 +311,7 @@ class Invoicee_mcp {
 			$vars['results'] = 0;
 		}
 		else{
-			$settings = $this->EE->invoicee->_get_settings('client');
+			$settings = $this->_get_settings('client');
 			foreach($query->result_array() as $row){
 				$vars['data'][] = array(
 										'id' 		=> 	$row['project_id'],
@@ -378,7 +378,7 @@ $this->EE->functions->redirect(BASE.AMP.'C=addons_modules'.AMP.'M=show_module_cp
 			$vars['results'] = 0;
 		}
 		else{
-			$settings = $this->EE->invoicee->_get_settings('invoice');
+			$settings = $this->_get_settings('invoice');
 			foreach($query->result() as $row){
 				$sql = "SELECT SUM(total) as t_total FROM exp_invoicee_record_data WHERE record_id = " . $row->record_id;
 				$query = $this->EE->db->query($sql);
@@ -415,7 +415,7 @@ $this->EE->functions->redirect(BASE.AMP.'C=addons_modules'.AMP.'M=show_module_cp
 			$this->EE->db->join('member_data', 'members.member_id = member_data.member_id');
 			$this->EE->db->where('members.member_id', $member_id);
 			$query = $this->EE->db->get();
-			$settings = $this->EE->invoicee->_get_settings('client');
+			$settings = $this->_get_settings('client');
 			$vars['form_data'] = array(
 				'client_email' 	=>	$query->row('email'),
 				'client_username' 	=>	$query->row('username'),
@@ -448,7 +448,7 @@ $this->EE->functions->redirect(BASE.AMP.'C=addons_modules'.AMP.'M=show_module_cp
 		
 		//Set the page title
 		$this->EE->cp->set_variable('cp_page_title', $this->EE->lang->line('create_client'));
-		$vars['settings'] = array_slice($this->EE->invoicee->_get_settings('client'), 1);
+		$vars['settings'] = array_slice($this->_get_settings('client'), 1);
 		//Has any data been submitted??
 		if($this->EE->input->post('submit')){
 			if($this->EE->input->get_post('id')){
@@ -520,7 +520,7 @@ $this->EE->functions->redirect(BASE.AMP.'C=addons_modules'.AMP.'M=show_module_cp
 			}
 			
 			
-			$settings = $this->EE->invoicee->_get_settings();
+			$settings = $this->_get_settings();
 			$this->EE->load->model('member_model');
 			$this->EE->load->library('validate');
 			$email = $this->EE->input->post('client_email');
@@ -591,7 +591,7 @@ $this->EE->functions->redirect(BASE.AMP.'C=addons_modules'.AMP.'M=show_module_cp
 		
 		
 		//Grab the module settings
-		$settings = $this->EE->invoicee->_get_settings();
+		$settings = $this->_get_settings();
 		
 		//Grab the correct currency symbol
 		$vars['symbol'] = $settings[$type.'_settings'][$type.'_symbol'];
@@ -772,7 +772,7 @@ $this->EE->functions->redirect(BASE.AMP.'C=addons_modules'.AMP.'M=show_module_cp
 		if($inv->num_rows() > 0){
 			$this->EE->load->model('template_model');
 			//$this->EE->load->library('invoicee');
-			$settings = $this->EE->invoicee->_get_settings('invoice');
+			$settings = $this->_get_settings('invoice');
 			$query = $this->EE->template_model->get_template_info($settings['invoice_template']);
 	
 			if (!$row = $query->row())
@@ -782,7 +782,7 @@ $this->EE->functions->redirect(BASE.AMP.'C=addons_modules'.AMP.'M=show_module_cp
 			$template_data = $row->template_data;
 			$template_data = str_replace('{record_id}', $record_id, $template_data);
 			$text = $this->_parse($template_data);
-			$this->EE->invoicee->pdf($text, $inv->row('name'));
+			$this->pdf($text, $inv->row('name'));
 		}
 		else{
 			return show_error(lang('invalid_invoice'));
@@ -847,7 +847,7 @@ $this->EE->functions->redirect(BASE.AMP.'C=addons_modules'.AMP.'M=show_module_cp
 		$this->EE->db->join('members', 'members.member_id = member_data.member_id');
 		$query = $this->EE->db->get_where('member_data', array('member_data.member_id' => $query->row('member_id')));
 		
-		foreach($this->EE->invoicee->_get_settings('client') as $key => $val){
+		foreach($this->_get_settings('client') as $key => $val){
 			$vars[$key] = $query->row('m_field_id_'.$val);
 		}
 		$vars['email'] = $query->row('email');
@@ -856,6 +856,67 @@ $this->EE->functions->redirect(BASE.AMP.'C=addons_modules'.AMP.'M=show_module_cp
 		return $this->EE->load->view('send', $vars, TRUE);
 	}
 	
+	public function pdf($text, $name)
+	{
+		$dompdf = new DOMPDF();
+		$dompdf->set_paper('a4', 'portrait');
+		$dompdf->load_html($text);
+		$dompdf->render();
+		$dompdf->stream($name, array("Attachment" => 0));
+	}
+	
+	public function _get_settings($type=''){
+		$settings = array();
+		
+		//Get all the module settings data
+		$query = $this->EE->db->get('invoicee_settings');
+		
+		if($query->num_rows() > 0){
+			$settings['client_settings'] = json_decode($query->row('client_settings'), true);
+			$settings['email_settings'] = json_decode($query->row('email_settings'), true);
+			$settings['invoice_settings'] = json_decode($query->row('invoice_settings'), true);
+			$settings['quote_settings'] = json_decode($query->row('quote_settings'), true);
+		}
+		else{
+			$settings['client_settings']['member_groups'] = '';
+			$settings['client_settings']['client_first_name'] = '';
+			$settings['client_settings']['client_surname'] = '';
+			$settings['client_settings']['client_address_one'] = '';
+			$settings['client_settings']['client_address_two'] = '';
+			$settings['client_settings']['client_town'] = '';
+			$settings['client_settings']['client_county'] = '';
+			$settings['client_settings']['client_postcode'] = '';
+			$settings['client_settings']['client_telephone'] = '';
+			$settings['client_settings']['client_vat_number'] = '';
+			$settings['email_settings']['email_send_admin'] = '';
+			$settings['email_settings']['email_from_address'] = '';
+			$settings['email_settings']['email_from_name'] = '';
+			$settings['email_settings']['email_subject'] = '';
+			$settings['invoice_settings']['invoice_prefix'] = '';
+			$settings['invoice_settings']['invoice_length'] = '';
+			$settings['invoice_settings']['invoice_template'] = '';
+			$settings['invoice_settings']['invoice_symbol'] = '';
+			$settings['quote_settings']['quote_prefix'] = '';
+			$settings['quote_settings']['quote_length'] = '';
+			$settings['quote_settings']['quote_template'] = '';
+			$settings['quote_settings']['quote_symbol'] = '';
+		}
+		if($type == ''){
+			return $settings;
+		}
+		elseif($type == 'client'){
+			return $settings['client_settings'];
+		}
+		elseif($type == 'email'){
+			return $settings['email_settings'];
+		}
+		elseif($type == 'invoice'){
+			return $settings['invoice_settings'];
+		}
+		elseif($type == 'quote'){
+			return $settings['quote_settings'];
+		}
+	}
 			
 }
 // END CLASS

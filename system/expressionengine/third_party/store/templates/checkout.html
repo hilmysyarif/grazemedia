@@ -1,0 +1,87 @@
+{embed="store_example/_header"}
+
+<ul class="breadcrumb">
+	<li><a href="{path='store_example'}">Example Store</a> <span class="divider">&raquo;</span></li>
+	<li class="active">Checkout</li>
+</ul>
+
+<div class="page-header">
+	<div class="pull-right"><div class="span2">
+		<div class="progress progress-info progress-striped"><div class="bar" style="width:30%"></div></div>
+	</div></div>
+	<h1>Checkout <small>the first step of a sample checkout process</small></h1>
+</div>
+
+{exp:store:checkout
+	form_class="form-horizontal"
+	next="store_example/checkout2"}
+
+	{if no_items}
+		<div class="alert alert-error">Your cart is empty!</div>
+	{/if}
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th style="width:60%">Product</th>
+				<th>Price</th>
+				<th>Qty</th>
+				<th style="text-align:right">Total</th>
+			</tr>
+		</thead>
+		<tbody>
+			{items}
+				<tr>
+					<td>
+						<h4><a href="{path='store_example/product'}/{url_title}">{title}</a></h4>
+						<p><small>
+							<b>SKU:</b> {sku}<br />
+							{modifiers}
+								<b>{modifier_name}</b>: {modifier_value} {if price_mod_val}({price_mod}){/if}<br />
+							{/modifiers}
+						</small></p>
+					</td>
+					<td>{price}</td>
+					<td><input name="items[{key}][item_qty]" value="{item_qty}" class="input-mini" /></td>
+					<td style="text-align:right">{item_subtotal}</td>
+				</tr>
+			{/items}
+			<tr>
+				<th colspan="3">Subtotal</th>
+				<th style="text-align:right">{order_subtotal}</th>
+			</tr>
+			<tr>
+			  <td>Promo Code</td>
+				<td colspan="2">{field:promo_code}</td>
+				<td style="text-align:right">{order_discount}</td>
+			</tr>
+			<tr>
+				<td>Shipping</td>
+				<td colspan="2">
+					{field:shipping_method}
+					{if error:shipping_method}<p class="help-block">{error:shipping_method}</p>{/if}
+				</td>
+				<td style="text-align:right">{order_shipping}</td>
+			</tr>
+			{if tax_name}
+  			<tr>
+  				<td colspan="3">{tax_name} ({tax_percent}%)</td>
+  				<td style="text-align:right">{order_tax}</td>
+  			</tr>
+  		{/if}
+			<tr>
+				<th colspan="3">Total</th>
+				<th style="text-align:right">{order_total}</th>
+			</tr>
+		</tbody>
+	</table>
+
+	<div class="form-actions">
+		<input type="submit" name="update_cart" value="Update Totals" class="btn" />
+		<input type="submit" name="empty_cart" value="Empty Cart" class="btn btn-danger" />
+		<input type="submit" name="next" value="Continue to Billing Details" class="btn btn-primary" />
+	</div>
+
+{/exp:store:checkout}
+
+{embed="store_example/_footer"}

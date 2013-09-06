@@ -1,0 +1,39 @@
+{embed="store_example/_header"}
+
+<header class="hero-unit">
+	<h1>Example Store.</h1>
+	<p>Get your e-commerce site up and running quickly, using our handy example templates.</p>
+</header>
+
+<div class="row">
+	<div class="span8">
+		<div class="page-header">
+			<h1>Products <small>all of your products, listed alphabetically</small></h1>
+		</div>
+
+		{exp:store:search orderby="title" sort="asc"}
+			{exp:store:product entry_id="{entry_id}"}
+				<h2><a href="{url_title_path='store_example/product'}">{title}</a></h2>
+				<p>
+					{if on_sale}
+						<del>{regular_price}</del>
+						{price}
+						<span class="label label-success">Save {you_save} ({you_save_percent}%)</span>
+					{if:else}
+						{price}
+					{/if}
+				</p>
+				<p>
+					<a href="{url_title_path='store_example/product'}" class="btn">Learn More</a>
+				</p>
+			{/exp:store:product}
+			<hr />
+		{/exp:store:search}
+
+	</div>
+	<div class="span4">
+		{embed="store_example/_cart"}
+	</div>
+</div>
+
+{embed="store_example/_footer"}

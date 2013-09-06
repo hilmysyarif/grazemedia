@@ -1,0 +1,30 @@
+<div class="well">
+
+	<h3 style="margin-bottom:0.5em">Sidebar Cart</h3>
+
+	{exp:store:cart}
+
+		{if no_items}
+			<p>Your cart is empty!</p>
+		{/if}
+
+		<table class="table table-condensed">
+			{items}
+				<tr>
+					<td>{item_qty} &times; {title}</td>
+					<td style="text-align:right">{item_subtotal}</td>
+				</tr>
+			{/items}
+			<tr>
+				<th>Total</th>
+				<th style="text-align:right">{order_subtotal}</th>
+			</tr>
+		</table>
+
+		<div class="row">
+			<a href="{path='store_example/checkout'}" class="btn btn-success pull-right">Checkout</a>
+		</div>
+
+	{/exp:store:cart}
+
+</div>

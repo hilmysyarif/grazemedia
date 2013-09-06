@@ -507,7 +507,6 @@ ee()->functions->redirect(BASE.AMP.'C=addons_modules'.AMP.'M=show_module_cp'.AMP
 		if($id = ee()->input->get('id')){
 			//Use the API to get the attendees for the event
 			$tickets = ee()->eventbrite->event_get(array('id' => $id, 'only_display' => 'tickets'));
-
 			//If there is any error, lets show it
 			if(isset($tickets['error'])){
 				$this->_error_handler($tickets);

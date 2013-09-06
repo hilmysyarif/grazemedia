@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Example Store</title>
+	<link rel="stylesheet" type="text/css" href="{stylesheet=store_example/bootstrap}" />
+	{exp:jquery:script_tag}
+</head>
+<body style="padding-top:60px">
+
+<div class="navbar navbar-fixed-top">
+	<div class="navbar-inner">
+		<div class="container">
+			<a href="{path='store_example'}" class="brand">Example Store</a>
+			<ul class="nav">
+				<li><a href="{path='store_example'}">Products</a></li>
+				<li><a href="{path='store_example/my_orders'}">My Orders</a></li>
+				<li class="divider-vertical"></li>
+				{exp:store:cart}
+					{if no_items}
+						<li><a href="{path='store_example/checkout'}">Your Cart: 0 items</a></li>
+					{/if}
+					<li><a href="{path='store_example/checkout'}">Your Cart: {order_qty} items ({order_subtotal})</a></li>
+				{/exp:store:cart}
+			</ul>
+			<ul class="nav pull-right">
+				<li><a href="http://exp-resso.com/docs/store/" target="_blank">Expresso Store User Guide</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<div class="container">
