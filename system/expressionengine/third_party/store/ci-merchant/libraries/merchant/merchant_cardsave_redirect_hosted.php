@@ -119,7 +119,7 @@ class Merchant_cardsave_redirect_hosted extends Merchant_driver
 			'PostCodeMandatory'						=> 'true',
 			'StateMandatory'						=> 'false',
 			'CountryMandatory'						=> 'true',
-			'ResultDeliveryMethod'					=> 'POST',
+			'ResultDeliveryMethod'					=> 'SERVER',
 			'ServerResultURL'						=> $this->param('return_url'),  
 			'PaymentFormDisplaysResult'				=> 'false',
 			//'ServerResultURLCookieVariables'		=> 'false',
