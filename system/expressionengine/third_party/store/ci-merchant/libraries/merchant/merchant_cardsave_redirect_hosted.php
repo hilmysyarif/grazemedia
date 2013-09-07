@@ -54,6 +54,11 @@ class Merchant_cardsave_redirect_hosted extends Merchant_driver
 
 	public function purchase_return()
 	{
+		if(!isset($_POST['StatusCode'])){
+			$response new Merchant_response('complete', 'Transaction Complete', '12345');
+			$response->_data = $_POST;
+			return $response;
+		}
 		$transauthorised = FALSE; 
 		switch (intval($this->CI->input->post('StatusCode')))
 		{
