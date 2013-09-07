@@ -55,9 +55,12 @@ class Merchant_cardsave_redirect_hosted extends Merchant_driver
 	public function purchase_return()
 	{
 		if(!isset($_GET['CrossReference'])){
-			//return new Merchant_response('complete', 'Transaction Complete', '12345');
-			//$response->_data = $_POST;
-			//return $response;
+			echo '<pre>';
+			print_r($_GET);
+			echo '</pre>';
+			echo '<pre>';
+			print_r($_POST);
+			echo '</pre>';
 		}
 
 		$transauthorised = FALSE; 
@@ -100,15 +103,11 @@ class Merchant_cardsave_redirect_hosted extends Merchant_driver
 		}
 	
 		if ($transauthorised == TRUE) {
-			$response = $_POST;
-			return new Merchant_cardsave_redirect_hosted_response($response, $transauthorised);
 			echo "StatusCode=0&Message="; 
 			exit;
 		} 
 		else 
 		{
-			$response = $_POST;
-			return new Merchant_cardsave_redirect_hosted_response($response, $transauthorised);
 			echo "StatusCode=30&Message=". $this->lang("cardsave_server_transaction_not_authorized"). " ". $post['Message']; 
 			exit;
 		}
@@ -198,84 +197,6 @@ class Merchant_cardsave_redirect_hosted extends Merchant_driver
 		return $revised_request;
 	}
 
-	private function _build_3dauth()
-	{
-		if (empty($_POST['MD']) OR empty($_POST['PaRes']))
-		{
-			throw new Merchant_exception(lang('merchant_invalid_response'));
-		}
-
-		$request = $this->_new_request('ThreeDSecureAuthentication');
-		$request->ThreeDSecureMessage->MerchantAuthentication['MerchantID'] = $this->setting('merchant_id');
-		$request->ThreeDSecureMessage->MerchantAuthentication['Password'] = $this->setting('password');
-		$request->ThreeDSecureMessage->ThreeDSecureInputData['CrossReference'] = $this->CI->input->post('MD');
-		$request->ThreeDSecureMessage->ThreeDSecureInputData->PaRES = $this->CI->input->post('PaRes');
-
-		return $request;
-	}
-
-	private function _new_request($action)
-	{
-		$request = new SimpleXMLElement("<$action></$action>");
-		$request->addAttribute('xmlns', 'https://www.thepaymentgateway.net/');
-		return $request;
-	}
-
-	private function _post_cardsave_request($request)
-	{
-		// the PHP SOAP library sucks, and SimpleXML can't append element trees
-		$document = new DOMDocument('1.0', 'utf-8');
-		$envelope = $document->appendChild($document->createElementNS('http://schemas.xmlsoap.org/soap/envelope/', 'soap:Envelope'));
-		$envelope->setAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
-		$envelope->setAttribute('xmlns:xsd', 'http://www.w3.org/2001/XMLSchema');
-		$body = $envelope->appendChild($document->createElement('soap:Body'));
-		$body->appendChild($document->importNode(dom_import_simplexml($request), TRUE));
-
-		// post to Cardsave
-		$http_headers = array(
-			'Content-Type: text/xml; charset=utf-8',
-			'SOAPAction: https://www.thepaymentgateway.net/'.$request->getName());
-		$response_str = $this->post_request(self::PROCESS_URL, $document->saveXML(), NULL, NULL, $http_headers);
-
-		// we only care about the content of the soap:Body element
-		$response_dom = DOMDocument::loadXML($response_str);
-		$response = simplexml_import_dom($response_dom->documentElement->firstChild->firstChild);
-
-		$result_elem = $request->getName().'Result';
-		$status = (int)$response->$result_elem->StatusCode;
-		switch ($status)
-		{
-			case 0:
-				// success
-				return $response;
-			case 3:
-				// redirect for 3d authentication
-				$data = array(
-					'PaReq' => (string)$response->TransactionOutputData->ThreeDSecureOutputData->PaREQ,
-					'TermUrl' => $this->param('return_url'),
-					'MD' => (string)$response->TransactionOutputData['CrossReference'],
-				);
-
-				$acs_url = (string)$response->TransactionOutputData->ThreeDSecureOutputData->ACSURL;
-				$this->post_redirect($acs_url, $data, lang('merchant_3dauth_redirect'));
-				break;
-			default:
-				// error
-				throw new Merchant_exception((string)$response->$result_elem->Message);
-		}
-	}
-}
-
-class Merchant_cardsave_redirect_hosted_response extends Merchant_response
-{
-	protected $_response;
-
-	public function __construct($response, $transauthorised)
-	{
-		$this->_response = $response;
-		$this->_status = $response['StatusCode'];
-		$this->_reference = $response['CrossReference'];
-	}
 }
 
 /* End of file ./libraries/merchant/drivers/merchant_cardsave.php */
