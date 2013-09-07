@@ -55,7 +55,7 @@ class Merchant_cardsave_redirect_hosted extends Merchant_driver
 	public function purchase_return()
 	{
 		$status_code;
-		if($this->CI->input->post('StatusCode')){
+		if($this->CI->input->post('StatusCode') != ''){
 			switch ($this->CI->input->post('StatusCode')){
 
 				case 0:
@@ -67,10 +67,12 @@ class Merchant_cardsave_redirect_hosted extends Merchant_driver
 
 			}
 			$response = new Merchant_response($status_code, $this->CI->input->post('Message'), $this->CI->input->post('CrossReference'));
+			$response->_data = $_POST;
+			//return $response;
 			echo 'StatusCode=0&Message=Woohoo';
 		}
 		else{
-
+			echo 'boo';
 		}
 		//echo 'StatusCode=0Message=Success';
 	}
