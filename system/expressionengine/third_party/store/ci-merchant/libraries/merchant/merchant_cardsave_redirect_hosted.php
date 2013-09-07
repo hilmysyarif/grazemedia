@@ -55,18 +55,24 @@ class Merchant_cardsave_redirect_hosted extends Merchant_driver
 	public function purchase_return()
 	{
 		$status_code;
-		switch ($this->CI->input->post('StatusCode')){
+		if($this->CI->input->post('StatusCode')){
+			switch ($this->CI->input->post('StatusCode')){
 
-			case 0:
-			$status_code = 'complete';
-			break;
+				case 0:
+				$status_code = 'complete';
+				break;
 
-			default:
-			$status_code = 'failed';
+				default:
+				$status_code = 'failed';
+
+			}
+			$response = new Merchant_response($status_code, $this->CI->input->post('Message'), $this->CI->input->post('CrossReference'));
+			echo 'StatusCode=0&Message=Woohoo';
+		}
+		else{
 
 		}
-		//return new Merchant_response($status_code, $this->CI->input->post('Message'), $this->CI->input->post('CrossReference'));
-		echo 'StatusCode=0Message=Success';
+		//echo 'StatusCode=0Message=Success';
 	}
 
 	private function _build_authorize_or_purchase($method)
@@ -113,7 +119,7 @@ class Merchant_cardsave_redirect_hosted extends Merchant_driver
 			'PostCodeMandatory'						=> 'true',
 			'StateMandatory'						=> 'false',
 			'CountryMandatory'						=> 'true',
-			'ResultDeliveryMethod'					=> 'SERVER',
+			'ResultDeliveryMethod'					=> 'POST',
 			'ServerResultURL'						=> $this->param('return_url'),  
 			'PaymentFormDisplaysResult'				=> 'false',
 			//'ServerResultURLCookieVariables'		=> 'false',
@@ -147,13 +153,8 @@ class Merchant_cardsave_redirect_hosted extends Merchant_driver
 		}
 		// pop the last ampersand
 		$hash = substr($hash, 0, -1);
-		//echo $hash;
-		//exit();
 		$revised_request['HashDigest'] = sha1($hash);
-		//echo '<pre>';
-		//print_r($revised_request);
-		//echo '</pre>';
-		//exit();
+		
 		return $revised_request;
 	}
 
