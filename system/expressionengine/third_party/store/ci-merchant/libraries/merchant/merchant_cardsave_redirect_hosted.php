@@ -55,7 +55,7 @@ class Merchant_cardsave_redirect_hosted extends Merchant_driver
 	public function purchase_return()
 	{
 		if(!isset($_GET['CrossReference'])){
-			return new Merchant_response('complete', 'Transaction Complete', '12345');
+			//return new Merchant_response('complete', 'Transaction Complete', '12345');
 			//$response->_data = $_POST;
 			//return $response;
 		}
@@ -100,12 +100,15 @@ class Merchant_cardsave_redirect_hosted extends Merchant_driver
 		}
 	
 		if ($transauthorised == TRUE) {
-			
+			$response = $_POST;
+			return new Merchant_cardsave_redirect_hosted_response($response, $transauthorised);
 			echo "StatusCode=0&Message="; 
 			exit;
 		} 
 		else 
 		{
+			$response = $_POST;
+			return new Merchant_cardsave_redirect_hosted_response($response, $transauthorised);
 			echo "StatusCode=30&Message=". $this->lang("cardsave_server_transaction_not_authorized"). " ". $post['Message']; 
 			exit;
 		}
@@ -267,12 +270,11 @@ class Merchant_cardsave_redirect_hosted_response extends Merchant_response
 {
 	protected $_response;
 
-	public function __construct($response)
+	public function __construct($response, $transauthorised)
 	{
-
 		$this->_response = $response;
-		$this->_status = $response['status'];
-		$this->_reference = (string)$response->TransactionOutputData['CrossReference'];
+		$this->_status = $response['StatusCode'];
+		$this->_reference = $response['CrossReference'];
 	}
 }
 
