@@ -54,9 +54,19 @@ class Merchant_cardsave_redirect_hosted extends Merchant_driver
 
 	public function purchase_return()
 	{
-		//$request = $this->_build_3dauth();
-		//$response = $this->_post_cardsave_request($request);
-		return new Merchant_response('authorized');
+		$status_code;
+		switch ($this->CI->input->post('StatusCode')){
+
+			case 0:
+			$status_code = 'complete';
+			break;
+
+			default:
+			$status_code = 'failed';
+
+		}
+		//return new Merchant_response($status_code, $this->CI->input->post('Message'), $this->CI->input->post('CrossReference'));
+		echo 'StatusCode=0Message=Success';
 	}
 
 	private function _build_authorize_or_purchase($method)
@@ -92,7 +102,7 @@ class Merchant_cardsave_redirect_hosted extends Merchant_driver
 			'City'									=> $this->param('city'),
 			'State'									=> $state,
 			'PostCode'								=> $this->param('postcode'),
-			'CountryCode'							=> '',
+			'CountryCode'							=> 826,
 			'EmailAddress'							=> '',
 			'PhoneNumber'							=> '',
 			'EmailAddressEditable'					=> 'false',
