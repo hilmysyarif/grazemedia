@@ -54,7 +54,7 @@ class Merchant_cardsave_redirect_hosted extends Merchant_driver
 
 	public function purchase_return()
 	{
-		if(!isset($_GET['CrossReference'])){
+		if(!isset($_GET['CrossReference']) && $_GET['CrossReference'] != ''){
 			echo '<pre>';
 			print_r($_GET);
 			echo '</pre>';
