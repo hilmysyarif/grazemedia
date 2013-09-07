@@ -62,54 +62,56 @@ class Merchant_cardsave_redirect_hosted extends Merchant_driver
 			print_r($_POST);
 			echo '</pre>';
 		}
+		else{
 
-		$transauthorised = FALSE; 
-		switch (intval($this->CI->input->post('StatusCode')))
-		{
-			// transaction authorised
-			case 0:
-				$transauthorised = TRUE;
-				break;
-			// card referred (treat as decline)
-			case 4:
-				$transauthorised = FALSE;
-				break;
-			// transaction declined
-			case 5:
-				$transauthorised = FALSE;
-				break;
-			// duplicate transaction
-			case 20:
-				// need to look at the previous status code to see if the
-				// transaction was successful
-				if (intval($this->CI->input->post('PreviousStatusCode')) == 0)
-				{
-					// transaction authorised
+			$transauthorised = FALSE; 
+			switch (intval($this->CI->input->post('StatusCode')))
+			{
+				// transaction authorised
+				case 0:
 					$transauthorised = TRUE;
-				}
-				else
-				{
-					// transaction not authorised
+					break;
+				// card referred (treat as decline)
+				case 4:
 					$transauthorised = FALSE;
-				}
-				break;
-			// error occurred
-			case 30:
-				$transauthorised = FALSE;
-				break;
-			default:
-				$transauthorised = FALSE;
-				break;
-		}
-	
-		if ($transauthorised == TRUE) {
-			echo "StatusCode=0&Message="; 
-			exit;
-		} 
-		else 
-		{
-			echo "StatusCode=30&Message=". $this->lang("cardsave_server_transaction_not_authorized"). " ". $post['Message']; 
-			exit;
+					break;
+				// transaction declined
+				case 5:
+					$transauthorised = FALSE;
+					break;
+				// duplicate transaction
+				case 20:
+					// need to look at the previous status code to see if the
+					// transaction was successful
+					if (intval($this->CI->input->post('PreviousStatusCode')) == 0)
+					{
+						// transaction authorised
+						$transauthorised = TRUE;
+					}
+					else
+					{
+						// transaction not authorised
+						$transauthorised = FALSE;
+					}
+					break;
+				// error occurred
+				case 30:
+					$transauthorised = FALSE;
+					break;
+				default:
+					$transauthorised = FALSE;
+					break;
+			}
+		
+			if ($transauthorised == TRUE) {
+				echo "StatusCode=0&Message="; 
+				exit;
+			} 
+			else 
+			{
+				echo "StatusCode=30&Message=". $this->lang("cardsave_server_transaction_not_authorized"). " ". $post['Message']; 
+				exit;
+			}
 		}
  		exit;
 	}
