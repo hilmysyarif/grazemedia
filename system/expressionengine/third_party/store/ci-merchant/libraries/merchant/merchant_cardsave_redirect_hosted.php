@@ -54,6 +54,9 @@ class Merchant_cardsave_redirect_hosted extends Merchant_driver
 
 	public function purchase_return()
 	{
+		echo '<pre>';
+		print_r($_POST);
+		echo '</pre>';
 		$status_code;
 		if($this->CI->input->post('StatusCode')){
 			switch ($this->CI->input->post('StatusCode')){
