@@ -97,7 +97,8 @@ class Merchant_cardsave_redirect_hosted extends Merchant_driver
 				$transauthorised = FALSE;
 				break;
 		}
-	
+		echo $transauthorised;
+		exit();
 		if ($transauthorised == TRUE) 
 		{
 			$transaction_id = str_replace("AuthCode: ", "", $this->CI->input->post('Message'));	
