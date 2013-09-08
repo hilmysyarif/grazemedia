@@ -54,13 +54,8 @@ class Merchant_cardsave_redirect_hosted extends Merchant_driver
 
 	public function purchase_return()
 	{
-		//echo intval($this->CI->input->post('PreviousStatusCode'));
-		/*echo '<pre>';
-		print_r($_POST);
-		echo '</pre>';*/
-		//exit();
 		$transauthorised = FALSE; 
-		switch (intval($this->CI->input->post('StatusCode')))
+		switch ($this->CI->input->post('StatusCode'))
 		{
 			// transaction authorised
 			case 0:
@@ -78,7 +73,7 @@ class Merchant_cardsave_redirect_hosted extends Merchant_driver
 			case 20:
 				// need to look at the previous status code to see if the
 				// transaction was successful
-				if (intval($this->CI->input->post('PreviousStatusCode')) == 0)
+				if ($this->CI->input->post('PreviousStatusCode'))
 				{
 					// transaction authorised
 					$transauthorised = FALSE;
@@ -98,7 +93,7 @@ class Merchant_cardsave_redirect_hosted extends Merchant_driver
 				break;
 		}
 	
-		if ($transauthorised == TRUE) 
+		if ($transauthorised) 
 		{
 			$transaction_id = str_replace("AuthCode: ", "", $this->CI->input->post('Message'));	
 			return new Merchant_response('complete', $this->CI->input->post('Message'), $transaction_id);
