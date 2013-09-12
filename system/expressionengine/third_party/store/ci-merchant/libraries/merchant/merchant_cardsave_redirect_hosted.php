@@ -54,15 +54,56 @@ class Merchant_cardsave_redirect_hosted extends Merchant_driver
 
 	public function purchase_return()
 	{
-		//echo intval($this->CI->input->post('PreviousStatusCode'));
-		echo '<pre>';
-		print_r($_POST);
-		echo '</pre>';
-		exit();
+		//Grab the hash value from the POST data
+		$hash = $this->CI->input->post('HashDigest');
+
+		//Prepare a string of data based on the Public and Private details
+		$hash_string = 'PreSharedKey='.$this->setting('preshared_key').'&';
+		$hash_string .= 'MerchantID='.$this->setting('merchant_id').'&';
+		$hash_string .= 'Password='.$this->setting('password').'&';
+		$hash_string .= 'StatusCode='.$this->CI->input->post('StatusCode').'&';
+		$hash_string .= 'Message='.$this->CI->input->post('Message').'&';
+		$hash_string .= 'PreviousStatusCode='.$this->CI->input->post('PreviousStatusCode').'&';
+		$hash_string .= 'PreviousMessage='.$this->CI->input->post('PreviousMessage').'&';
+		$hash_string .= 'CrossReference='.$this->CI->input->post('CrossReference').'&';
+		$hash_string .= 'AddressNumericCheckResult='.$this->CI->input->post('AddressNumericCheckResult').'&';
+		$hash_string .= 'PostCodeCheckResult='.$this->CI->input->post('PostCodeCheckResult').'&';
+		$hash_string .= 'CV2CheckResult='.$this->CI->input->post('CV2CheckResult').'&';
+		$hash_string .= 'ThreeDSecureAuthenticationCheckResult='.$this->CI->input->post('ThreeDSecureAuthenticationCheckResult').'&';
+		$hash_string .= 'CardType='.$this->CI->input->post('CardType').'&';
+		$hash_string .= 'CardClass='.$this->CI->input->post('CardClass').'&';
+		$hash_string .= 'CardIssuer='.$this->CI->input->post('CardIssuer').'&';
+		$hash_string .= 'CardIssuerCountryCode='.$this->CI->input->post('CardIssuerCountryCode').'&';
+		$hash_string .= 'Amount='.$this->CI->input->post('Amount').'&';
+		$hash_string .= 'CurrencyCode='.$this->CI->input->post('CurrencyCode').'&';
+		$hash_string .= 'OrderID='.$this->CI->input->post('OrderID').'&';
+		$hash_string .= 'TransactionType='.$this->CI->input->post('TransactionType').'&';
+		$hash_string .= 'TransactionDateTime='.$this->CI->input->post('TransactionDateTime').'&';
+		$hash_string .= 'OrderDescription='.$this->CI->input->post('OrderDescription').'&';
+		$hash_string .= 'CustomerName='.$this->CI->input->post('CustomerName').'&';
+		$hash_string .= 'Address1='.$this->CI->input->post('Address1').'&';
+		$hash_string .= 'Address2='.$this->CI->input->post('Address2').'&';
+		$hash_string .= 'Address3='.$this->CI->input->post('Address3').'&';
+		$hash_string .= 'Address4='.$this->CI->input->post('Address4').'&';
+		$hash_string .= 'City='.$this->CI->input->post('City').'&';
+		$hash_string .= 'State='.$this->CI->input->post('State').'&';
+		$hash_string .= 'PostCode='.$this->CI->input->post('PostCode').'&';
+		$hash_string .= 'CountryCode='.$this->CI->input->post('CountryCode').'&';
+		$hash_string .= 'EmailAddress='.$this->CI->input->post('EmailAddress').'&';
+		$hash_string .= 'PhoneNumber='.$this->CI->input->post('PhoneNumber');
+
+		//Hash the string
+		$hash_string = sha1($hash_string);
+
+		//Compare string to that supplied by Cardsave
+		if($hash !== $hash_string){
+			return new Merchant_response('failed', $this->CI->input->post('Message'), lang('cardsave_invalid_hash'));	
+		}
+
+		//If it does match, see if it went triugh OK
 		$transauthorised = FALSE; 
 		switch (intval($this->CI->input->post('StatusCode')))
 		{
-
 			// transaction authorised
 			case 0:
 				$transauthorised = TRUE;
@@ -101,62 +142,12 @@ class Merchant_cardsave_redirect_hosted extends Merchant_driver
 	
 		if ($transauthorised == TRUE) 
 		{
-			$hash = $this->CI->input->post('HashDigest');
-
-			$hash_string = 'PreSharedKey='.$this->setting('preshared_key').'&';
-			$hash_string .= 'MerchantID='.$this->setting('merchant_id').'&';
-			$hash_string .= 'Password='.$this->setting('password').'&';
-			$hash_string .= 'StatusCode='.$this->CI->input->post('StatusCode').'&';
-			$hash_string .= 'Message='.$this->CI->input->post('Message').'&';
-			$hash_string .= 'PreviousStatusCode='.$this->CI->input->post('PreviousStatusCode').'&';
-			$hash_string .= 'PreviousMessage='.$this->CI->input->post('PreviousMessage').'&';
-			$hash_string .= 'CrossReference='.$this->CI->input->post('CrossReference').'&';
-			$hash_string .= 'AddressNumericCheckResult='.$this->CI->input->post('AddressNumericCheckResult').'&';
-			$hash_string .= 'PostCodeCheckResult='.$this->CI->input->post('PostCodeCheckResult').'&';
-			$hash_string .= 'CV2CheckResult='.$this->CI->input->post('CV2CheckResult').'&';
-			$hash_string .= 'ThreeDSecureAuthenticationCheckResult='.$this->CI->input->post('ThreeDSecureAuthenticationCheckResult').'&';
-			$hash_string .= 'CardType='.$this->CI->input->post('CardType').'&';
-			$hash_string .= 'CardClass='.$this->CI->input->post('CardClass').'&';
-			$hash_string .= 'CardIssuer='.$this->CI->input->post('CardIssuer').'&';
-			$hash_string .= 'CardIssuerCountryCode='.$this->CI->input->post('CardIssuerCountryCode').'&';
-			$hash_string .= 'Amount='.$this->CI->input->post('Amount').'&';
-			$hash_string .= 'CurrencyCode='.$this->CI->input->post('CurrencyCode').'&';
-			$hash_string .= 'OrderID='.$this->CI->input->post('OrderID').'&';
-			$hash_string .= 'TransactionType='.$this->CI->input->post('TransactionType').'&';
-			$hash_string .= 'TransactionDateTime='.$this->CI->input->post('TransactionDateTime').'&';
-			$hash_string .= 'OrderDescription='.$this->CI->input->post('OrderDescription').'&';
-			$hash_string .= 'CustomerName='.$this->CI->input->post('CustomerName').'&';
-			$hash_string .= 'Address1='.$this->CI->input->post('Address1').'&';
-			$hash_string .= 'Address2='.$this->CI->input->post('Address2').'&';
-			$hash_string .= 'Address3='.$this->CI->input->post('Address3').'&';
-			$hash_string .= 'Address4='.$this->CI->input->post('Address4').'&';
-			$hash_string .= 'City='.$this->CI->input->post('City').'&';
-			$hash_string .= 'State='.$this->CI->input->post('State').'&';
-			$hash_string .= 'PostCode='.$this->CI->input->post('PostCode').'&';
-			$hash_string .= 'CountryCode='.$this->CI->input->post('CountryCode').'&';
-			$hash_string .= 'EmailAddress='.$this->CI->input->post('EmailAddress').'&';
-			$hash_string .= 'PhoneNumber='.$this->CI->input->post('PhoneNumber');
-
-			$hash_string = sha1($hash_string);
-
-			if($hash === $hash_string){
-				$transaction_id = str_replace("AuthCode: ", "", $this->CI->input->post('Message'));	
-				return new Merchant_response('complete', $this->CI->input->post('Message'), $transaction_id);	
-			}
-			else{
-				echo '<pre>';
-				print_r($_POST);
-				echo '</pre>';
-				return new Merchant_response('failed', $this->CI->input->post('Message'));
-			}
-		} 
-		else 
-		{	
-			echo '<pre>';
-				print_r($_POST);
-				echo '</pre>';
-			return new Merchant_response('failed', $this->CI->input->post('Message'));
+			$transaction_id = str_replace("AuthCode: ", "", $this->CI->input->post('Message'));	
+			return new Merchant_response('complete', $this->CI->input->post('Message'), $transaction_id);
 		}
+		else{
+			return new Merchant_response('failed', $this->CI->input->post('Message'), $this->CI->input->post('CrossReference'));
+		} 		
 	}
 
 	private function _build_authorize_or_purchase($method)
