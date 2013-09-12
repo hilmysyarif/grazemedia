@@ -139,6 +139,8 @@ class Merchant_cardsave_redirect_hosted extends Merchant_driver
 			$hash_string = sha1($hash_string);
 
 			if($hash === $hash_string){
+				echo $hash . '<br />' . $hash_string;
+				exit();
 				$transaction_id = str_replace("AuthCode: ", "", $this->CI->input->post('Message'));	
 				return new Merchant_response('complete', $this->CI->input->post('Message'), $transaction_id);	
 			}
