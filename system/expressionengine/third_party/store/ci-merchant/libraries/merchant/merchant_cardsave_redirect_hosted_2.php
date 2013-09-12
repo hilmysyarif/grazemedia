@@ -54,11 +54,6 @@ class Merchant_cardsave_redirect_hosted extends Merchant_driver
 
 	public function purchase_return()
 	{
-		//echo intval($this->CI->input->post('PreviousStatusCode'));
-		/*echo '<pre>';
-		print_r($_POST);
-		echo '</pre>';*/
-		//exit();
 		$transauthorised = FALSE; 
 		switch (intval($this->CI->input->post('StatusCode')))
 		{
@@ -98,7 +93,7 @@ class Merchant_cardsave_redirect_hosted extends Merchant_driver
 				break;
 		}
 	
-		if ($transauthorised == TRUE) 
+		if ($transauthorised) 
 		{
 			$hash = $this->CI->input->post('HashDigest');
 
@@ -145,6 +140,8 @@ class Merchant_cardsave_redirect_hosted extends Merchant_driver
 			else{
 				return new Merchant_response('failed', $this->CI->input->post('Message'));
 			}
+
+			
 		} 
 		else 
 		{		
@@ -236,4 +233,4 @@ class Merchant_cardsave_redirect_hosted extends Merchant_driver
 	}
 }
 
-/* End of file ./libraries/merchant/drivers/merchant_cardsave.php */
+/* End of file ./libraries/merchant/drivers/merchant_cardsave_redirect_hosted.php */
