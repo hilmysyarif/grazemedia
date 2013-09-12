@@ -143,6 +143,9 @@ class Merchant_cardsave_redirect_hosted extends Merchant_driver
 				return new Merchant_response('complete', $this->CI->input->post('Message'), $transaction_id);	
 			}
 			else{
+				echo '<pre>';
+				print_r($_POST);
+				echo '</pre>';
 				return new Merchant_response('failed', $this->CI->input->post('Message'));
 			}
 		} 
